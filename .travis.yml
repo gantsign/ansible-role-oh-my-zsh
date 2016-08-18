@@ -2,8 +2,11 @@
 language: python
 python: "2.7"
 
-# Use the new container infrastructure
-sudo: false
+# Require the standard build environment
+sudo: required
+
+# Require Ubuntu 14.04
+dist: trusty
 
 # Install ansible
 addons:
@@ -13,17 +16,32 @@ addons:
 
 install:
   # Install ansible
-  - pip install ansible
+  - sudo pip install ansible
 
   # Check ansible version
   - ansible --version
 
-  # Create ansible.cfg with correct roles_path
-  - printf '[defaults]\nroles_path=../' >ansible.cfg
+  # Update apt
+  - sudo apt-get -qq update
+
+  # Create test users
+  - sudo useradd -d /home/test_usr1 -m test_usr1
+  - sudo useradd -d /home/test_usr2 -m test_usr2
 
 script:
   # Basic role syntax check
   - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
+
+  # Run the playbook with ansible-playbook
+  - ansible-playbook tests/test.yml -i tests/inventory
+
+  # Check oh-my-zsh configuration
+  - ls /home/test_usr1/.oh-my-zsh
+  - grep 'test_theme1' /home/test_usr1/.zshrc
+  - grep 'test_plugin1 test_plugin2' /home/test_usr1/.zshrc
+  - ls /home/test_usr2/.oh-my-zsh
+  - grep 'test_theme2' /home/test_usr2/.zshrc
+  - grep 'test_plugin3 test_plugin4' /home/test_usr2/.zshrc
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
