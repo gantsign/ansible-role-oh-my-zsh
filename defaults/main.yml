@@ -1,2 +1,7 @@
 ---
-# defaults file for oh-my-zsh
+# Default theme
+oh_my_zsh_theme: robbyrussell
+
+# Default plugins
+oh_my_zsh_plugins:
+  - git
