@@ -1,0 +1,9 @@
+---
+ansible:
+  playbook: tests/test.yml
+
+docker:
+  containers:
+  - name: ansible-role-oh-my-zsh-01
+    image: ubuntu
+    image_version: '16.04'

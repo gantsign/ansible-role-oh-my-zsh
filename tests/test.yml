@@ -1,6 +1,21 @@
 ---
-- hosts: localhost
+- hosts: all
   remote_user: root
+
+  pre_tasks:
+    - name: create test_usr1
+      become: yes
+      user:
+        name: test_usr1
+        home: /home/test_usr1
+        createhome: yes
+    - name: create test_usr2
+      become: yes
+      user:
+        name: test_usr2
+        home: /home/test_usr2
+        createhome: yes
+
   roles:
     - role: ansible-role-oh-my-zsh
       oh_my_zsh_theme: test_theme1
