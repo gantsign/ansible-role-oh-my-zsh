@@ -1,4 +1,4 @@
-# Created by https://www.gitignore.io/api/windows,linux,osx,vim,emacs,intellij,eclipse,visualstudiocode
+# Created by https://www.gitignore.io/api/windows,linux,osx,vim,emacs,intellij,eclipse,visualstudiocode,ansible
 
 ### Windows ###
 # Windows image file caches
@@ -234,3 +234,16 @@ local.properties
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
+
+
+### Ansible ###
+*.retry
+
+####################
+### Custom rules ###
+####################
+
+### Molecule ### 
+
+.cache
+.molecule

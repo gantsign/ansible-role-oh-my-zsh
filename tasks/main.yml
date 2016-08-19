@@ -19,7 +19,7 @@
     creates: "~{{ item.username }}/.oh-my-zsh"
   with_items: "{{ users }}"
 
-- name: set ownership and permissions of oh-my-zsh for users 
+- name: set ownership and permissions of oh-my-zsh for users
   become: yes
   file:
     path: "~{{ item.username }}/.oh-my-zsh"
