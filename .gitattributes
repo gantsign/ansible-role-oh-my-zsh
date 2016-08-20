@@ -15,8 +15,11 @@
 *.html text
 *.xhtml text
 *.js text
+*.ts text
 *.css text
-*.prf text
+*.less text
+*.scss text
+*.cfg text
 LICENSE text
 
 # Declare files that will always have CRLF line endings on checkout.
@@ -35,3 +38,6 @@ LICENSE text
 *.jpg binary
 *.jpeg binary
 *.gif binary
+*.eot binary
+*.tff binary
+*.woff binary
