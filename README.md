@@ -60,6 +60,7 @@ development and testing; the role is unit tested using
 [pytest](http://docs.pytest.org/).
 
 To develop or test you'll need to have installed the following:
+
 * Linux (e.g. [Ubuntu](http://www.ubuntu.com/))
 * [Docker](https://www.docker.com/)
 * [Python](https://www.python.org/) (including python-pip)
