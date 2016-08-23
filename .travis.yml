@@ -8,6 +8,7 @@ sudo: required
 # Require Ubuntu 14.04
 dist: trusty
 
+# Require Docker
 services:
   - docker
 
