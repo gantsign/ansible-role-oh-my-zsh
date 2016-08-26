@@ -23,3 +23,11 @@ def test_oh_my_zsh_config(File, username, theme, plugins):
     assert zshrc.group == username
     assert zshrc.contains(theme)
     assert zshrc.contains(plugins)
+
+def test_console_setup(File):
+    setup = File('/etc/default/console-setup')
+    assert setup.exists
+    assert setup.is_file
+    assert setup.user == 'root'
+    assert setup.group == 'root'
+    assert setup.contains('CHARMAP="UTF-8"')

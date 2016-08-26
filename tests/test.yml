@@ -15,6 +15,15 @@
         name: test_usr2
         home: /home/test_usr2
         createhome: yes
+    - name: install console-setup file
+      become: yes
+      copy:
+        src: console-setup.sh
+        dest: /etc/default/console-setup
+        force: no
+        owner: root
+        group: root
+        mode: 'u=rwx,go=r'
 
   roles:
     - role: ansible-role-oh-my-zsh
