@@ -245,5 +245,6 @@ local.properties
 
 ### Molecule ### 
 
+__pycache__
 .cache
 .molecule
