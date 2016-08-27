@@ -3,6 +3,7 @@ Ansible Role: Oh-My-Zsh
 
 [![Build Status](https://travis-ci.org/gantsign/ansible-role-oh-my-zsh.svg?branch=master)](https://travis-ci.org/gantsign/ansible-role-oh-my-zsh)
 [![Ansible Galaxy](https://img.shields.io/badge/ansible--galaxy-gantsign.oh--my--zsh-blue.svg)](https://galaxy.ansible.com/gantsign/oh-my-zsh)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/gantsign/ansible-role-oh-my-zsh/master/LICENSE)
 
 Role to download, install and configure [Oh-My-Zsh](http://ohmyz.sh/).
 
