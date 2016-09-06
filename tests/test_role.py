@@ -6,8 +6,8 @@ testinfra_hosts = AnsibleRunner('.molecule/ansible_inventory').get_hosts('all')
 
 
 @pytest.mark.parametrize('username', [
-    ('test_usr1'),
-    ('test_usr2'),
+    'test_usr1',
+    'test_usr2',
 ])
 def test_oh_my_zsh_install(File, username):
     oh_my_zsh = File('/home/' + username + '/.oh-my-zsh')
