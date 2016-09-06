@@ -25,7 +25,7 @@ install:
   - pip install ansible
 
   # Install Molecule
-  - pip install 'molecule==1.9.1'
+  - pip install 'molecule==1.10.3'
 
   # Check Ansible version
   - ansible --version
