@@ -33,6 +33,10 @@ install:
   # Check Molecule version
   - molecule --version
 
+  # Build the Docker images
+  - molecule create
+  - molecule destroy
+
 script:
   - molecule test
 
