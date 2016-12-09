@@ -4,6 +4,9 @@ ansible:
 
 docker:
   containers:
-  - name: ansible-role-oh-my-zsh-01
+  - name: ansible-role-oh-my-zsh-ubuntu-trusty
+    image: ubuntu
+    image_version: '14.04'
+  - name: ansible-role-oh-my-zsh-ubuntu-xenial
     image: ubuntu
     image_version: '16.04'
