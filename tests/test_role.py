@@ -14,7 +14,7 @@ def test_oh_my_zsh_install(File, username):
     assert oh_my_zsh.exists
     assert oh_my_zsh.is_directory
     assert oh_my_zsh.user == username
-    assert oh_my_zsh.group == username
+    assert oh_my_zsh.group in [username, 'users']
 
 
 @pytest.mark.parametrize('username,theme,plugins', [
@@ -26,7 +26,7 @@ def test_oh_my_zsh_config(File, username, theme, plugins):
     assert zshrc.exists
     assert zshrc.is_file
     assert zshrc.user == username
-    assert zshrc.group == username
+    assert zshrc.group in [username, 'users']
     assert zshrc.contains(theme)
     assert zshrc.contains(plugins)
 

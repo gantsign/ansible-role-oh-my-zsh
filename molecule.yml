@@ -23,3 +23,7 @@ docker:
     image: fedora
     image_version: '25'
     command: /bin/bash
+  - name: ansible-role-oh-my-zsh-opensuse-leap
+    image: opensuse
+    image_version: '42.2'
+    command: /bin/bash
