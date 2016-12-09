@@ -3,18 +3,16 @@
   remote_user: root
 
   pre_tasks:
-    - name: create test_usr1
+    - name: create test users
       become: yes
       user:
-        name: test_usr1
-        home: /home/test_usr1
+        name: '{{ item }}'
+        home: '/home/{{ item }}'
         createhome: yes
-    - name: create test_usr2
-      become: yes
-      user:
-        name: test_usr2
-        home: /home/test_usr2
-        createhome: yes
+      with_items:
+        - test_usr1
+        - test_usr2
+
     - name: install console-setup file
       become: yes
       copy:
