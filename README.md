@@ -14,6 +14,11 @@ Requirements
 
     * Debian Family
 
+        * Debian
+
+            * Wheezy (7)
+            * Jessie (8)
+
         * Ubuntu
 
             * Trusty (14.04)
