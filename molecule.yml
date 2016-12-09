@@ -19,7 +19,7 @@ docker:
   - name: ansible-role-oh-my-zsh-centos-7
     image: centos
     image_version: '7'
-  - name: ansible-role-maven-fedora-25
+  - name: ansible-role-oh-my-zsh-fedora-25
     image: fedora
     image_version: '25'
     command: /bin/bash
