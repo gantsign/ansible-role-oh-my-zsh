@@ -49,5 +49,3 @@
     backup: yes
     mode: 'u=rw,go=r'
   with_items: '{{ users }}'
-
-- include: debian-console-setup.yml

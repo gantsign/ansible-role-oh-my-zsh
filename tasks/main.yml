@@ -1,0 +1,4 @@
+---
+- include: install.yml
+
+- include: debian-console-setup.yml
