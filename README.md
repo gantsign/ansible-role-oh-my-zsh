@@ -33,6 +33,10 @@ Requirements
 
             * 7
 
+        * Fedora
+
+            * 25
+
 Role Variables
 --------------
 
