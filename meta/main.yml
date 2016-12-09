@@ -8,6 +8,9 @@ galaxy_info:
     - name: EL
       versions:
         - 7
+    - name: Fedora
+      versions:
+        - 25
     - name: Ubuntu
       versions:
         - trusty
