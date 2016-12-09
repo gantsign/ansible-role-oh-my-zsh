@@ -1,15 +1,12 @@
 ---
-- name: install git
+- name: install dependencies
   become: yes
   apt:
-    name: git
+    name: '{{ item }}'
     state: present
-
-- name: install zsh
-  become: yes
-  apt:
-    name: zsh
-    state: present
+  with_items:
+    - git
+    - zsh
 
 - name: clone oh-my-zsh for users
   tags:
