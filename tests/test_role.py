@@ -32,9 +32,11 @@ def test_oh_my_zsh_config(File, username, theme, plugins):
 
 
 def test_console_setup(File):
-    setup = File('/etc/default/console-setup')
-    assert setup.exists
-    assert setup.is_file
-    assert setup.user == 'root'
-    assert setup.group == 'root'
-    assert setup.contains('CHARMAP="UTF-8"')
+    # console-setup is Debian family specific
+    if File('/etc/debian_version').exists:
+        setup = File('/etc/default/console-setup')
+        assert setup.exists
+        assert setup.is_file
+        assert setup.user == 'root'
+        assert setup.group == 'root'
+        assert setup.contains('CHARMAP="UTF-8"')

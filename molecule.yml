@@ -16,3 +16,6 @@ docker:
   - name: ansible-role-oh-my-zsh-ubuntu-xenial
     image: ubuntu
     image_version: '16.04'
+  - name: ansible-role-oh-my-zsh-centos-7
+    image: centos
+    image_version: '7'
