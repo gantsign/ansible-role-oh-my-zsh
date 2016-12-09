@@ -1,7 +1,7 @@
 ---
 - name: install dependencies
   become: yes
-  apt:
+  package:
     name: '{{ item }}'
     state: present
   with_items:
@@ -42,10 +42,11 @@
 
 - name: write .zshrc for users
   become: yes
-  become_user: '{{ item.username }}'
   template:
     src: zshrc.j2
     dest: '~{{ item.username }}/.zshrc'
     backup: yes
+    owner: '{{ item.username }}'
+    group: '{{ item.username }}'
     mode: 'u=rw,go=r'
   with_items: '{{ users }}'

@@ -2,3 +2,4 @@
 - include: install.yml
 
 - include: debian-console-setup.yml
+  when: ansible_os_family == 'Debian'
