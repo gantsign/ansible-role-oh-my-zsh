@@ -25,7 +25,7 @@
   file:
     path: '~{{ item.username }}/.oh-my-zsh'
     owner: '{{ item.username }}'
-    group: '{{ item.username }}'
+    group: "{{ (ansible_os_family == 'Suse') | ternary('users', item.username) }}"
     # Prevent the cloned repository from having insecure permissions. Failing to do
     # so causes compinit() calls to fail with "command not found: compdef" errors
     # for users with insecure umasks (e.g., "002", allowing group writability).
@@ -47,6 +47,6 @@
     dest: '~{{ item.username }}/.zshrc'
     backup: yes
     owner: '{{ item.username }}'
-    group: '{{ item.username }}'
+    group: "{{ (ansible_os_family == 'Suse') | ternary('users', item.username) }}"
     mode: 'u=rw,go=r'
   with_items: '{{ users }}'

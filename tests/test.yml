@@ -31,6 +31,14 @@
       changed_when: no
       when: ansible_pkg_mgr == 'dnf'
 
+    - name: install Ansible zypper dependency (zypper)
+      become: yes
+      command: zypper install -y python-xml
+      args:
+        warn: no
+      changed_when: no
+      when: ansible_pkg_mgr == 'zypper'
+
   roles:
     - role: ansible-role-oh-my-zsh
       oh_my_zsh_theme: test_theme1
