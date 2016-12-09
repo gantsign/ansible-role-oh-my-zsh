@@ -4,6 +4,12 @@ ansible:
 
 docker:
   containers:
+  - name: ansible-role-oh-my-zsh-debian-wheezy
+    image: debian
+    image_version: '7'
+  - name: ansible-role-oh-my-zsh-debian-jessie
+    image: debian
+    image_version: '8'
   - name: ansible-role-oh-my-zsh-ubuntu-trusty
     image: ubuntu
     image_version: '14.04'

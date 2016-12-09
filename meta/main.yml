@@ -10,6 +10,10 @@ galaxy_info:
         - trusty
         - wily
         - xenial
+    - name: Debian
+      versions:
+        - jessie
+        - wheezy
   galaxy_tags:
     - ohmyzsh
     - zsh
