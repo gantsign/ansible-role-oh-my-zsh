@@ -10,7 +10,15 @@ Role to download, install and configure [Oh-My-Zsh](http://ohmyz.sh/).
 Requirements
 ------------
 
-* Ubuntu
+* Linux Distribution
+
+    * Debian Family
+
+        * Ubuntu
+
+            * Trusty (14.04)
+            * Wily (15.10)
+            * Xenial (16.04)
 
 Role Variables
 --------------
