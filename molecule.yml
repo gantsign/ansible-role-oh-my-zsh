@@ -2,6 +2,12 @@
 ansible:
   playbook: tests/test.yml
 
+dependency:
+  name: galaxy
+
+driver:
+  name: docker
+
 docker:
   containers:
   - name: ansible-role-oh-my-zsh-debian-wheezy
@@ -27,3 +33,6 @@ docker:
     image: opensuse
     image_version: '42.2'
     command: /bin/bash
+
+verifier:
+  name: testinfra
