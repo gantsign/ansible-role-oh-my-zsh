@@ -23,9 +23,5 @@
     line: CHARMAP="UTF-8"
     state: present
   when: console_setup_file.stat.exists
-  register: console_setup
-
-- name: apply console configration
-  become: yes
-  command: /usr/sbin/dpkg-reconfigure -f noninteractive console-setup
-  when: console_setup.changed
+  notify:
+    - apply console configration
