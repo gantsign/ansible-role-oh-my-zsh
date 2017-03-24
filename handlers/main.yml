@@ -1,2 +1,4 @@
 ---
-# handlers file for oh-my-zsh
+- name: apply console configration
+  become: yes
+  command: /usr/sbin/dpkg-reconfigure -f noninteractive console-setup
