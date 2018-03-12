@@ -1,13 +1,9 @@
 ---
-- name: install dependencies (debian)
-  become: yes
-  apt:
-    update_cache: yes
-    name: "{{ item }}"
+
+- name: add git-ppa-repository (debian)
+  apt_repository:
+    repo: 'ppa:git-core/ppa'
     state: present
-  with_items:
-    - git
-    - zsh
   when: ansible_os_family == 'Debian'
 
 - name: install dependencies
