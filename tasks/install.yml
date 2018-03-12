@@ -1,6 +1,13 @@
 ---
 - name: Update apt cache.
-  apt: update_cache=yes cache_valid_time=600
+  become: yes
+  apt:
+    update_cache: yes
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - git
+    - zsh
   when: ansible_os_family == 'Debian'
 
 - name: install dependencies
