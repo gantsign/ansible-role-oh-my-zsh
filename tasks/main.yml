@@ -1,5 +1,5 @@
 ---
-- include_tasks: install.yml
+- import_tasks: install.yml
 
-- include_tasks: debian-console-setup.yml
+- import_tasks: debian-console-setup.yml
   when: ansible_os_family == 'Debian'
