@@ -12,15 +12,6 @@
     - git
     - zsh
 
-- name: install dependencies
-  become: yes
-  package:
-    name: '{{ item }}'
-    state: present
-  with_items:
-    - git
-    - zsh
-
 - name: clone oh-my-zsh for users
   tags:
     # Suppress warning: [ANSIBLE0006] git used in place of git module
