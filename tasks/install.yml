@@ -1,5 +1,5 @@
 ---
-- name: Update apt cache.
+- name: install dependencies (debian)
   become: yes
   apt:
     update_cache: yes
