@@ -1,4 +1,11 @@
 ---
+
+- name: add git-ppa-repository (debian)
+  apt_repository:
+    repo: 'ppa:git-core/ppa'
+    state: present
+  when: ansible_os_family == 'Debian'
+
 - name: install dependencies
   become: yes
   package:
