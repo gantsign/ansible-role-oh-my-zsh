@@ -1,6 +1,6 @@
 ---
-- hosts: all
-  remote_user: root
+- name: Converge
+  hosts: all
 
   pre_tasks:
     - name: create test users
@@ -16,7 +16,7 @@
     - name: install console-setup file
       become: yes
       copy:
-        src: console-setup.sh
+        src: tests/console-setup.sh
         dest: /etc/default/console-setup
         force: no
         owner: root
