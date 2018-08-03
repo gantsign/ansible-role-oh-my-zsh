@@ -34,7 +34,7 @@ install:
   - pip install 'docker<3.0'
 
   # Install Molecule
-  - pip install 'molecule==2.10.1'
+  - pip install 'molecule==2.16.0'
 
   # Check Ansible version
   - ansible --version
