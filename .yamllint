@@ -10,4 +10,4 @@ rules:
   line-length: disable
   # NOTE(retr0h): Templates no longer fail this lint rule.
   #               Uncomment if running old Molecule templates.
-  # truthy: disable
+  truthy: disable
