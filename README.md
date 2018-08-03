@@ -10,7 +10,7 @@ Role to download, install and configure [Oh-My-Zsh](http://ohmyz.sh/).
 Requirements
 ------------
 
-* Ansible >= 2.3
+* Ansible >= 2.4
 
 * Linux Distribution
 
