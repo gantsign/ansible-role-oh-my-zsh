@@ -14,18 +14,17 @@
     # Git module doesn't allow us to set `core.autocrlf=input`.
     - skip_ansible_lint
   become: yes
+  become_user: '{{ item.username }}'
   # core.autocrlf=input prevents https://github.com/robbyrussell/oh-my-zsh/issues/4402
-  command: 'git clone -c core.autocrlf=input --depth=1 https://github.com/robbyrussell/oh-my-zsh.git ~{{ item.username }}/.oh-my-zsh'
+  command: 'git clone -c core.autocrlf=input --depth=1 https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh'
   args:
     creates: '~{{ item.username }}/.oh-my-zsh'
   with_items: '{{ users }}'
 
-- name: set ownership and permissions of oh-my-zsh for users
+- name: set permissions of oh-my-zsh for users
   become: yes
   file:
     path: '~{{ item.username }}/.oh-my-zsh'
-    owner: '{{ item.username }}'
-    group: "{{ (ansible_os_family == 'Suse') | ternary('users', item.username) }}"
     # Prevent the cloned repository from having insecure permissions. Failing to do
     # so causes compinit() calls to fail with "command not found: compdef" errors
     # for users with insecure umasks (e.g., "002", allowing group writability).
@@ -42,11 +41,10 @@
 
 - name: write .zshrc for users
   become: yes
+  become_user: '{{ item.username }}'
   template:
     src: zshrc.j2
     dest: '~{{ item.username }}/.zshrc'
     backup: yes
-    owner: '{{ item.username }}'
-    group: "{{ (ansible_os_family == 'Suse') | ternary('users', item.username) }}"
     mode: 'u=rw,go=r'
   with_items: '{{ users }}'
