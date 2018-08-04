@@ -48,7 +48,7 @@ Requirements
 Role Variables
 --------------
 
-The following variable will change the behavior of this role (default values
+The following variables will change the behavior of this role (default values
 are shown below):
 
 ```yaml
