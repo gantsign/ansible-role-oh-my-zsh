@@ -19,7 +19,6 @@ galaxy_info:
     - name: Ubuntu
       versions:
         - trusty
-        - wily
         - xenial
     - name: Debian
       versions:
