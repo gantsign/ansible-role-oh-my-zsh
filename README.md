@@ -107,9 +107,7 @@ To develop or test you'll need to have installed the following:
 * [Ansible](https://www.ansible.com/)
 * [Molecule](http://molecule.readthedocs.io/)
 
-To run the role (i.e. the `tests/test.yml` playbook), and test the results
-(`tests/test_role.py`), execute the following command from the project root
-(i.e. the directory with `molecule.yml` in it):
+To test this role run the following command from the project root:
 
 ```bash
 molecule test
