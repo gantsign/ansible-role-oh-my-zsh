@@ -9,19 +9,19 @@ lint:
   name: yamllint
 
 platforms:
-  - name: ansible-role-oh-my-zsh-debian-wheezy
+  - name: ansible-role-oh-my-zsh-debian-min
     image: debian:7
-  - name: ansible-role-oh-my-zsh-debian-jessie
+  - name: ansible-role-oh-my-zsh-debian-max
     image: debian:8
-  - name: ansible-role-oh-my-zsh-ubuntu-trusty
+  - name: ansible-role-oh-my-zsh-ubuntu-min
     image: ubuntu:14.04
-  - name: ansible-role-oh-my-zsh-ubuntu-xenial
+  - name: ansible-role-oh-my-zsh-ubuntu-max
     image: ubuntu:16.04
-  - name: ansible-role-oh-my-zsh-centos-7
+  - name: ansible-role-oh-my-zsh-centos
     image: centos:7
-  - name: ansible-role-oh-my-zsh-fedora-25
+  - name: ansible-role-oh-my-zsh-fedora
     image: fedora:25
-  - name: ansible-role-oh-my-zsh-opensuse-leap
+  - name: ansible-role-oh-my-zsh-opensuse
     image: opensuse:42.2
 
 provisioner:
