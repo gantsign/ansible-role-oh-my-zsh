@@ -12,8 +12,8 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
     'test_usr1',
     'test_usr2',
 ])
-def test_oh_my_zsh_install(File, username):
-    oh_my_zsh = File('/home/' + username + '/.oh-my-zsh')
+def test_oh_my_zsh_install(host, username):
+    oh_my_zsh = host.file('/home/' + username + '/.oh-my-zsh')
     assert oh_my_zsh.exists
     assert oh_my_zsh.is_directory
     assert oh_my_zsh.user == username
@@ -24,8 +24,8 @@ def test_oh_my_zsh_install(File, username):
     ('test_usr1', 'test_theme1', 'test_plugin1 test_plugin2'),
     ('test_usr2', 'test_theme2', 'test_plugin3 test_plugin4'),
 ])
-def test_oh_my_zsh_config(File, username, theme, plugins):
-    zshrc = File('/home/' + username + '/.zshrc')
+def test_oh_my_zsh_config(host, username, theme, plugins):
+    zshrc = host.file('/home/' + username + '/.zshrc')
     assert zshrc.exists
     assert zshrc.is_file
     assert zshrc.user == username
@@ -34,10 +34,10 @@ def test_oh_my_zsh_config(File, username, theme, plugins):
     assert zshrc.contains(plugins)
 
 
-def test_console_setup(File):
+def test_console_setup(host):
     # console-setup is Debian family specific
-    if File('/etc/debian_version').exists:
-        setup = File('/etc/default/console-setup')
+    if host.file('/etc/debian_version').exists:
+        setup = host.file('/etc/default/console-setup')
         assert setup.exists
         assert setup.is_file
         assert setup.user == 'root'
