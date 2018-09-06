@@ -16,7 +16,7 @@ platforms:
   - name: ansible-role-oh-my-zsh-ubuntu-min
     image: ubuntu:14.04
   - name: ansible-role-oh-my-zsh-ubuntu-max
-    image: ubuntu:16.04
+    image: ubuntu:18.04
   - name: ansible-role-oh-my-zsh-centos
     image: centos:7
   - name: ansible-role-oh-my-zsh-fedora
