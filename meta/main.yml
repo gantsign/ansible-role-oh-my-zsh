@@ -28,4 +28,5 @@ galaxy_info:
     - ohmyzsh
     - zsh
     - shell
+    - development
 dependencies: []
