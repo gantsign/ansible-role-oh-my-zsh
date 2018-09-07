@@ -20,7 +20,7 @@ platforms:
   - name: ansible-role-oh-my-zsh-centos
     image: centos:7
   - name: ansible-role-oh-my-zsh-fedora
-    image: fedora:25
+    image: fedora:28
   - name: ansible-role-oh-my-zsh-opensuse
     image: opensuse:42.2
 

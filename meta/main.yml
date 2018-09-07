@@ -11,7 +11,7 @@ galaxy_info:
         - 7
     - name: Fedora
       versions:
-        - 25
+        - 28
     # Galaxy doesn't support version 42.2 yet: "Invalid platform: opensuse-42.2 (skipping)"
     # - name: opensuse
     #   versions:
