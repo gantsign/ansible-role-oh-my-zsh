@@ -12,7 +12,7 @@ platforms:
   - name: ansible-role-oh-my-zsh-debian-min
     image: debian:7
   - name: ansible-role-oh-my-zsh-debian-max
-    image: debian:8
+    image: debian:9
   - name: ansible-role-oh-my-zsh-ubuntu-min
     image: ubuntu:14.04
   - name: ansible-role-oh-my-zsh-ubuntu-max
