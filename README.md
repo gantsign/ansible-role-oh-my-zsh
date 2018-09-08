@@ -39,9 +39,9 @@ Requirements
 
     * SUSE Family
 
-        * OpenSUSE
+        * openSUSE
 
-            * 42.2
+            * 15.0
 
     * Note: other versions are likely to work but have not been tested.
 
