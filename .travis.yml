@@ -2,10 +2,13 @@
 language: python
 python: '2.7'
 
-# Spin off separate builds for each of the following versions of Ansible
 env:
-  - ANSIBLE_VERSION=2.4.6
-  - ANSIBLE_VERSION=2.6.2
+  global:
+    - MOLECULEW_USE_SYSTEM=true
+  matrix:
+    # Spin off separate builds for each of the following versions of Ansible
+    - MOLECULEW_ANSIBLE=2.4.6
+    - MOLECULEW_ANSIBLE=2.6.2
 
 # Require the standard build environment
 sudo: required
@@ -17,37 +20,15 @@ dist: trusty
 services:
   - docker
 
-# Cache Ansible and Molecule to speed things up
-cache:
-  - pip
-
-before_install:
-  - sudo apt-get -qq update
-  - sudo apt-get install -o Dpkg::Options::='--force-confold' --force-yes -y docker-ce
-
 install:
-  # Install Ansible
-  - pip install "ansible~=$ANSIBLE_VERSION"
+  # Install dependencies
+  - ./moleculew wrapper-install
 
-  # Install Python API for Docker (required by Molecule Docker driver)
-  # Limit version as workaround for: https://github.com/ansible/ansible/issues/35612
-  - pip install 'docker<3.0'
-
-  # Install Molecule
-  - pip install 'molecule==2.16.0'
-
-  # Check Ansible version
-  - ansible --version
-
-  # Check Molecule version
-  - molecule --version
-
-  # Build the Docker images
-  - molecule create
-  - molecule destroy
+  # Display versions
+  - ./moleculew wrapper-versions
 
 script:
-  - molecule test
+  - ./moleculew test
 
 branches:
   only:
