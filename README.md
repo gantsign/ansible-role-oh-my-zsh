@@ -108,11 +108,19 @@ To develop or test you'll need to have installed the following:
 * [Ansible](https://www.ansible.com/)
 * [Molecule](http://molecule.readthedocs.io/)
 
-To test this role run the following command from the project root:
+Because the above can be tricky to install, this project includes
+[Molecule Wrapper](https://github.com/gantsign/molecule-wrapper). Molecule
+Wrapper is a shell script that installs Molecule and it's dependencies (apart
+from Linux) and then executes Molecule with the command you pass it.
+
+To test this role using Molecule Wrapper run the following command from the
+project root:
 
 ```bash
-molecule test
+./moleculew test
 ```
+
+Note: some of the dependencies need `sudo` permission to install.
 
 License
 -------
