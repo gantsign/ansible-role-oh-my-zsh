@@ -16,7 +16,7 @@
   become: yes
   become_user: '{{ item.username }}'
   # core.autocrlf=input prevents https://github.com/robbyrussell/oh-my-zsh/issues/4402
-  command: 'git clone -c core.autocrlf=input --depth=1 https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh'
+  command: 'git clone -c core.autocrlf=input --depth=1 https://github.com/robbyrussell/oh-my-zsh.git ~{{ item.username }}/.oh-my-zsh'
   args:
     creates: '~{{ item.username }}/.oh-my-zsh'
   with_items: '{{ users }}'
