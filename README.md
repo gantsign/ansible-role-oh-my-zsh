@@ -1,4 +1,4 @@
-Ansible Role: Oh-My-Zsh
+Ansible Role: Oh My Zsh
 =======================
 
 [![Build Status](https://travis-ci.org/gantsign/ansible-role-oh-my-zsh.svg?branch=master)](https://travis-ci.org/gantsign/ansible-role-oh-my-zsh)
@@ -6,6 +6,11 @@ Ansible Role: Oh-My-Zsh
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/gantsign/ansible-role-oh-my-zsh/master/LICENSE)
 
 Role to download, install and configure [Oh-My-Zsh](http://ohmyz.sh/).
+
+**Note:** you may be better off using the alternative
+[gantsign.ansible_role_antigen](https://galaxy.ansible.com/gantsign/antigen)
+role that can install third-party Zsh plugins as well as installing Oh My Zsh
+and its plugins.
 
 Requirements
 ------------
