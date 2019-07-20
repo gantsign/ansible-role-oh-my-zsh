@@ -7,7 +7,7 @@ env:
     - MOLECULEW_USE_SYSTEM=true
   matrix:
     # Spin off separate builds for each of the following versions of Ansible
-    - MOLECULEW_ANSIBLE=2.5.10
+    - MOLECULEW_ANSIBLE=2.6.18
     - MOLECULEW_ANSIBLE=2.8.2
 
 # Require the standard build environment
