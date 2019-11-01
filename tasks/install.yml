@@ -14,24 +14,27 @@
     # Git module doesn't allow us to set `core.autocrlf=input`.
     - skip_ansible_lint
   become: yes
-  become_user: '{{ item.username }}'
+  become_user: root
   # core.autocrlf=input prevents https://github.com/robbyrussell/oh-my-zsh/issues/4402
   command: 'git clone -c core.autocrlf=input --depth=1 https://github.com/robbyrussell/oh-my-zsh.git .oh-my-zsh'
   args:
     chdir: '~{{ item.username }}'
     creates: '~{{ item.username }}/.oh-my-zsh'
   with_items: '{{ users }}'
+  when: item.oh_my_zsh is defined
 
 - name: set permissions of oh-my-zsh for users
   become: yes
   file:
     path: '~{{ item.username }}/.oh-my-zsh'
+    owner: '{{ item.username }}'
     # Prevent the cloned repository from having insecure permissions. Failing to do
     # so causes compinit() calls to fail with "command not found: compdef" errors
     # for users with insecure umasks (e.g., "002", allowing group writability).
     mode: 'go-w'
     recurse: yes
   with_items: '{{ users }}'
+  when: item.oh_my_zsh is defined
 
 - name: set default shell for users
   become: yes
@@ -39,13 +42,16 @@
     name: '{{ item.username }}'
     shell: /bin/zsh
   with_items: '{{ users }}'
+  when: item.oh_my_zsh is defined
 
 - name: write .zshrc for users
   become: yes
-  become_user: '{{ item.username }}'
+  become_user: root
   template:
     src: zshrc.j2
     dest: '~{{ item.username }}/.zshrc'
     backup: yes
+    owner: '{{ item.username }}'
     mode: 'u=rw,go=r'
   with_items: '{{ users }}'
+  when: item.oh_my_zsh is defined
