@@ -2,11 +2,8 @@
 - name: install dependencies
   become: yes
   package:
-    name: '{{ item }}'
+    name: ['git', 'zsh']
     state: present
-  with_items:
-    - git
-    - zsh
 
 - name: clone oh-my-zsh for users
   tags:
@@ -18,40 +15,52 @@
   # core.autocrlf=input prevents https://github.com/robbyrussell/oh-my-zsh/issues/4402
   command: 'git clone -c core.autocrlf=input --depth=1 https://github.com/robbyrussell/oh-my-zsh.git .oh-my-zsh'
   args:
-    chdir: '~{{ item.username }}'
-    creates: '~{{ item.username }}/.oh-my-zsh'
-  with_items: '{{ users }}'
-  when: item.oh_my_zsh is defined
+    chdir: '~{{ user.username }}'
+    creates: '~{{ user.username }}/.oh-my-zsh'
+  loop: "{{ users }}"
+  loop_control:
+    loop_var: user
+    label: [ "{{ user.username }}" ]
+  when: "user.oh_my_zsh is defined"
 
 - name: set permissions of oh-my-zsh for users
   become: yes
   file:
-    path: '~{{ item.username }}/.oh-my-zsh'
-    owner: '{{ item.username }}'
+    path: '~{{ user.username }}/.oh-my-zsh'
+    owner: '{{ user.username }}'
     # Prevent the cloned repository from having insecure permissions. Failing to do
     # so causes compinit() calls to fail with "command not found: compdef" errors
     # for users with insecure umasks (e.g., "002", allowing group writability).
     mode: 'go-w'
     recurse: yes
-  with_items: '{{ users }}'
-  when: item.oh_my_zsh is defined
+  loop: "{{ users }}"
+  loop_control:
+    loop_var: user
+    label: [ "{{ user.username }}" ]
+  when: "user.oh_my_zsh is defined"
 
 - name: set default shell for users
   become: yes
   user:
-    name: '{{ item.username }}'
+    name: '{{ user.username }}'
     shell: /bin/zsh
-  with_items: '{{ users }}'
-  when: item.oh_my_zsh is defined
+  loop: "{{ users }}"
+  loop_control:
+    loop_var: user
+    label: [ "{{ user.username }}" ]
+  when: "user.oh_my_zsh is defined"
 
 - name: write .zshrc for users
   become: yes
   become_user: root
   template:
     src: zshrc.j2
-    dest: '~{{ item.username }}/.zshrc'
+    dest: '~{{ user.username }}/.zshrc'
     backup: yes
-    owner: '{{ item.username }}'
+    owner: '{{ user.username }}'
     mode: 'u=rw,go=r'
-  with_items: '{{ users }}'
-  when: item.oh_my_zsh is defined
+  loop: "{{ users }}"
+  loop_control:
+    loop_var: user
+    label: [ "{{ user.username }}" ]
+  when: "user.oh_my_zsh is defined"
