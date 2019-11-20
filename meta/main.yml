@@ -14,7 +14,7 @@ galaxy_info:
         - 31
     - name: opensuse
       versions:
-        - 15.0
+        - 15.1
     - name: Ubuntu
       versions:
         - trusty
