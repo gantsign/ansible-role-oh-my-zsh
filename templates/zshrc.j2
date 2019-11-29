@@ -1,6 +1,6 @@
 {{ ansible_managed | comment }}
 
-{% set oh_my_zsh = item.oh_my_zsh|default({}) %}
+{% set oh_my_zsh = user.oh_my_zsh|default({}) %}
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH

@@ -13,38 +13,46 @@
     # Git module doesn't allow us to set `core.autocrlf=input`.
     - skip_ansible_lint
   become: yes
-  become_user: '{{ item.username }}'
+  become_user: '{{ username }}'
   # core.autocrlf=input prevents https://github.com/robbyrussell/oh-my-zsh/issues/4402
   command: 'git clone -c core.autocrlf=input --depth=1 https://github.com/robbyrussell/oh-my-zsh.git .oh-my-zsh'
   args:
-    chdir: '~{{ item.username }}'
-    creates: '~{{ item.username }}/.oh-my-zsh'
-  with_items: '{{ users }}'
+    chdir: '~{{ username }}'
+    creates: '~{{ username }}/.oh-my-zsh'
+  with_items: "{{ users | map(attribute='username') | list }}"
+  loop_control:
+    loop_var: username
 
 - name: set permissions of oh-my-zsh for users
   become: yes
   file:
-    path: '~{{ item.username }}/.oh-my-zsh'
+    path: '~{{ username }}/.oh-my-zsh'
     # Prevent the cloned repository from having insecure permissions. Failing to do
     # so causes compinit() calls to fail with "command not found: compdef" errors
     # for users with insecure umasks (e.g., "002", allowing group writability).
     mode: 'go-w'
     recurse: yes
-  with_items: '{{ users }}'
+  with_items: "{{ users | map(attribute='username') | list }}"
+  loop_control:
+    loop_var: username
 
 - name: set default shell for users
   become: yes
   user:
-    name: '{{ item.username }}'
+    name: '{{ username }}'
     shell: /bin/zsh
-  with_items: '{{ users }}'
+  with_items: "{{ users | map(attribute='username') | list }}"
+  loop_control:
+    loop_var: username
 
 - name: write .zshrc for users
   become: yes
-  become_user: '{{ item.username }}'
+  become_user: '{{ user.username }}'
   template:
     src: zshrc.j2
-    dest: '~{{ item.username }}/.zshrc'
+    dest: '~{{ user.username }}/.zshrc'
     backup: yes
     mode: 'u=rw,go=r'
   with_items: '{{ users }}'
+  loop_control:
+    loop_var: user
