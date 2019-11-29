@@ -28,19 +28,17 @@
 
 set -e
 
-WRAPPER_VERSION=0.9.9
+WRAPPER_VERSION=0.9.11
 
 VERSION_DIR='.moleculew'
 PYTHON_VERSION_FILE="$VERSION_DIR/python_version"
 ANSIBLE_VERSION_FILE="$VERSION_DIR/ansible_version"
-DOCKER_LIB_VERSION_FILE="$VERSION_DIR/docker_lib_version"
 MOLECULE_VERSION_FILE="$VERSION_DIR/molecule_version"
 
 BUILD_DEPENDENCIES_INSTALLLED=false
 PYENV_INSTALLED=false
 
 ANSIBLE_VERSION=''
-DOCKER_LIB_VERSION=''
 MOLECULE_VERSION=''
 PYTHON_VERSION=''
 USE_SYSTEM_DEPENDENCIES=false
@@ -99,7 +97,7 @@ build_dependencies_present() {
         run_as_root dnf install \
             zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel \
             openssl-devel xz xz-devel libffi-devel \
-            git which curl jq
+            git curl jq
         echo ''
     elif [[ -x "$(command -v yum)" ]]; then
         banner 'Installing build dependencies'
@@ -107,7 +105,7 @@ build_dependencies_present() {
         run_as_root yum install \
             zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel \
             openssl-devel xz xz-devel libffi-devel \
-            git which curl jq
+            git curl jq
         echo ''
     elif [[ -x "$(command -v zypper)" ]]; then
         banner 'Installing build dependencies'
@@ -115,7 +113,7 @@ build_dependencies_present() {
         run_as_root zypper install \
             zlib-devel bzip2 libbz2-devel readline-devel sqlite3 sqlite3-devel \
             libopenssl-devel xz xz-devel \
-            git which curl jq
+            git curl jq
         echo ''
     fi
     BUILD_DEPENDENCIES_INSTALLLED=true
@@ -204,11 +202,7 @@ python_present() {
             echo 'Error: pip is not installed.' >&2
             exit 1
         fi
-        if [[ ! -x "$(command -v which)" ]]; then
-            echo 'Error: which is not installed.' >&2
-            exit 1
-        fi
-        PYTHON_EXE="$(which python)"
+        PYTHON_EXE="$(command -v python)"
     else
         if [[ ! -x "$(command -v git)" ]]; then
             echo 'Error: git is not installed.' >&2
@@ -244,15 +238,9 @@ install_ansible() {
     echo ''
 }
 
-install_docker_lib() {
-    banner "Installing Python Docker $DOCKER_LIB_VERSION into virtualenv $VIRTUAL_ENV"
-    pip install "docker==$DOCKER_LIB_VERSION"
-    echo ''
-}
-
 install_molecule() {
     banner "Installing Molecule $MOLECULE_VERSION into virtualenv $VIRTUAL_ENV"
-    pip install "molecule==$MOLECULE_VERSION"
+    pip install "molecule[docker]==$MOLECULE_VERSION"
     echo ''
 }
 
@@ -294,7 +282,6 @@ wrapper_version() {
 print_versions() {
     echo "Python: $PYTHON_VERSION"
     echo "Ansible: $ANSIBLE_VERSION"
-    echo "Python Docker library: $DOCKER_LIB_VERSION"
     echo "Molecule: $MOLECULE_VERSION"
 }
 
@@ -314,7 +301,6 @@ wrapper_freeze() {
 
     echo "$PYTHON_VERSION" > "$PYTHON_VERSION_FILE"
     echo "$ANSIBLE_VERSION" > "$ANSIBLE_VERSION_FILE"
-    echo "$DOCKER_LIB_VERSION" > "$DOCKER_LIB_VERSION_FILE"
     echo "$MOLECULE_VERSION" > "$MOLECULE_VERSION_FILE"
 
     print_versions
@@ -331,9 +317,6 @@ wrapper_unfreeze() {
     if [[ -f "$ANSIBLE_VERSION_FILE" ]]; then
         rm --verbose "$ANSIBLE_VERSION_FILE"
     fi
-    if [[ -f "$DOCKER_LIB_VERSION_FILE" ]]; then
-        rm --verbose "$DOCKER_LIB_VERSION_FILE"
-    fi
     if [[ -f "$MOLECULE_VERSION_FILE" ]]; then
         rm --verbose "$MOLECULE_VERSION_FILE"
     fi
@@ -347,12 +330,10 @@ wrapper_upgrade_versions() {
 
     local CURRENT_PYTHON_VERSION="$PYTHON_VERSION"
     local CURRENT_ANSIBLE_VERSION="$ANSIBLE_VERSION"
-    local CURRENT_DOCKER_LIB_VERSION="$DOCKER_LIB_VERSION"
     local CURRENT_MOLECULE_VERSION="$MOLECULE_VERSION"
 
     query_latest_python_version2
     query_latest_package_version ANSIBLE_VERSION ansible
-    query_latest_package_version DOCKER_LIB_VERSION docker
     query_latest_package_version MOLECULE_VERSION molecule
     echo ''
 
@@ -367,12 +348,6 @@ wrapper_upgrade_versions() {
         echo "Ansible: $CURRENT_ANSIBLE_VERSION (no change)"
     else
         echo "Ansible: $CURRENT_ANSIBLE_VERSION -> $ANSIBLE_VERSION"
-    fi
-
-    if [[ "$CURRENT_DOCKER_LIB_VERSION" == "$DOCKER_LIB_VERSION" ]]; then
-        echo "Python Docker library: $CURRENT_DOCKER_LIB_VERSION (no change)"
-    else
-        echo "Python Docker library: $CURRENT_DOCKER_LIB_VERSION -> $DOCKER_LIB_VERSION"
     fi
 
     if [[ "$CURRENT_MOLECULE_VERSION" == "$MOLECULE_VERSION" ]]; then
@@ -395,8 +370,6 @@ Molecule Wrapper
 
 Additional options:
   --ansible VERSION          Use the specified version of Ansible
-  --docker-lib VERSION       Use the specified version of the Python Docker
-                             library
   --molecule VERSION         Use the specified version of Molecule
   --python VERSION           Use the specified version of Python
   --use-system-dependencies  Use system dependencies
@@ -448,17 +421,12 @@ query_package_versions() {
 
 wrapper_options_ansible() {
     echo 'latest'
-    query_package_versions 'ansible' '2.2'
-}
-
-wrapper_options_docker_lib() {
-    echo 'latest'
-    query_package_versions 'docker' '3.0'
+    query_package_versions 'ansible' '2.7'
 }
 
 wrapper_options_molecule() {
     echo 'latest'
-    query_package_versions 'molecule' '2.0'
+    query_package_versions 'molecule' '2.20'
 }
 
 wrapper_options_python() {
@@ -515,7 +483,7 @@ for filename in os.listdir(molecule_dir):
 
     with open(molecule_yaml, 'r') as stream:
         try:
-            contents = yaml.load(stream)
+            contents = yaml.safe_load(stream)
         except yaml.YAMLError as exc:
             continue
 
@@ -578,15 +546,6 @@ parse_args() {
                 ANSIBLE_VERSION="$1"
                 shift
             ;;
-            --docker-lib=*)
-                DOCKER_LIB_VERSION="${1#*=}"
-                shift
-            ;;
-            --docker-lib)
-                shift
-                DOCKER_LIB_VERSION="$1"
-                shift
-            ;;
             --molecule=*)
                 MOLECULE_VERSION="${1#*=}"
                 shift
@@ -639,9 +598,6 @@ detemine_versions() {
     if [[ $ANSIBLE_VERSION == '' ]]; then
         ANSIBLE_VERSION="$MOLECULEW_ANSIBLE"
     fi
-    if [[ $DOCKER_LIB_VERSION == '' ]]; then
-        DOCKER_LIB_VERSION="$MOLECULEW_DOCKER_LIB"
-    fi
     if [[ $MOLECULE_VERSION == '' ]]; then
         MOLECULE_VERSION="$MOLECULEW_MOLECULE"
     fi
@@ -676,17 +632,6 @@ detemine_versions() {
         query_latest_package_version ANSIBLE_VERSION ansible
     fi
 
-    if [[ $DOCKER_LIB_VERSION == '' ]] || [[ $DOCKER_LIB_VERSION == 'default' ]]; then
-        if [[ -f $DOCKER_LIB_VERSION_FILE ]]; then
-            DOCKER_LIB_VERSION=$(<"$DOCKER_LIB_VERSION_FILE")
-        fi
-        if [[ $DOCKER_LIB_VERSION == '' ]]; then
-            query_latest_package_version DOCKER_LIB_VERSION docker
-        fi
-    elif [[ $DOCKER_LIB_VERSION == 'latest' ]]; then
-        query_latest_package_version DOCKER_LIB_VERSION docker
-    fi
-
     if [[ $MOLECULE_VERSION == '' ]] || [[ $MOLECULE_VERSION == 'default' ]]; then
         if [[ -f $MOLECULE_VERSION_FILE ]]; then
             MOLECULE_VERSION=$(<$MOLECULE_VERSION_FILE)
@@ -702,9 +647,9 @@ detemine_versions() {
 activate_virtualenv() {
     detemine_versions
 
-    MOLECULE_WRAPPER_ENV="$HOME/.moleculew/molecule/$MOLECULE_VERSION/ansible/$ANSIBLE_VERSION/python/$PYTHON_VERSION/docker/$DOCKER_LIB_VERSION"
+    MOLECULE_WRAPPER_ENV="$HOME/.moleculew/molecule/$MOLECULE_VERSION/ansible/$ANSIBLE_VERSION/python/$PYTHON_VERSION"
 
-    if [ ! -d "$MOLECULE_WRAPPER_ENV" ]; then
+    if [ ! -f "$MOLECULE_WRAPPER_ENV/bin/activate" ]; then
 
         build_dependencies_present
 
@@ -721,8 +666,6 @@ activate_virtualenv() {
         echo ''
 
         install_ansible
-
-        install_docker_lib
 
         install_molecule
     else
@@ -748,9 +691,6 @@ case $MOLECULE_CMD in
     ;;
     wrapper-options-ansible)
         wrapper_options_ansible
-    ;;
-    wrapper-options-docker-lib)
-        wrapper_options_docker_lib
     ;;
     wrapper-options-molecule)
         wrapper_options_molecule
