@@ -56,3 +56,4 @@
   with_items: '{{ users }}'
   loop_control:
     loop_var: user
+    label: '{{ user.username }}'
