@@ -28,7 +28,7 @@
 
 set -e
 
-WRAPPER_VERSION=0.9.11
+WRAPPER_VERSION=0.9.12
 
 VERSION_DIR='.moleculew'
 PYTHON_VERSION_FILE="$VERSION_DIR/python_version"
@@ -240,6 +240,10 @@ install_ansible() {
 
 install_molecule() {
     banner "Installing Molecule $MOLECULE_VERSION into virtualenv $VIRTUAL_ENV"
+
+    # Workaround https://github.com/ansible-community/molecule/issues/2676
+    pip install 'sh==1.12.14'
+
     pip install "molecule[docker]==$MOLECULE_VERSION"
     echo ''
 }
