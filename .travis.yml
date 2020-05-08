@@ -10,8 +10,8 @@ env:
     - MOLECULEW_ANSIBLE=2.7.15
     - MOLECULEW_ANSIBLE=2.9.1
 
-# Require Ubuntu 14.04
-dist: trusty
+# Require Ubuntu 16.04
+dist: xenial
 
 # Require Docker
 services:
