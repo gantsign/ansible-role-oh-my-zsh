@@ -1,22 +1,11 @@
 ---
 - name: install dependencies
-  become: yes
+  become: "{{ ansible_distribution != 'MacOSX' }}"
   package:
     name:
       - git
       - zsh
     state: present
-  when:
-    - ansible_distribution != 'MacOSX'
-
-- name: install dependencies (OSX only)
-  package:
-    name:
-      - git
-      - zsh
-    state: present
-  when:
-    - ansible_distribution == 'MacOSX'
 
 - name: clone oh-my-zsh for users
   tags:
