@@ -1,6 +1,6 @@
 ---
 - name: install dependencies
-  become: yes
+  become: "{{ ansible_distribution != 'MacOSX' }}"
   package:
     name:
       - git
