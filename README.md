@@ -78,6 +78,13 @@ users:
         - git
         - mvn
 ```
+Sometimes you would like to use list of users to create them in another role but with another shell. In this case you should disable installing oh_my_zsh for excluded user by specifying `install_oh_my_zsh: false` on single user dict.
+
+```yaml
+users:
+  - username: bashuser
+    install_oh_my_zsh: false
+```
 
 Example Playbook
 ----------------
