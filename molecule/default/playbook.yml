@@ -12,6 +12,7 @@
       with_items:
         - test_usr1
         - test_usr2
+        - test_usr3
 
     - name: install console-setup file
       become: yes
@@ -37,3 +38,5 @@
             plugins:
               - test_plugin3
               - test_plugin4
+        - username: test_usr3
+          install_oh_my_zsh: no
