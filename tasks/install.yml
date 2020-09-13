@@ -13,37 +13,40 @@
     # Git module doesn't allow us to set `core.autocrlf=input`.
     - skip_ansible_lint
   become: yes
-  become_user: '{{ username }}'
+  become_user: '{{ user.username }}'
   # core.autocrlf=input prevents https://github.com/robbyrussell/oh-my-zsh/issues/4402
   command: 'git clone -c core.autocrlf=input --depth=1 https://github.com/robbyrussell/oh-my-zsh.git .oh-my-zsh'
   args:
-    chdir: '~{{ username }}'
-    creates: '~{{ username }}/.oh-my-zsh'
-  with_items: "{{ users | map(attribute='username') | list }}"
+    chdir: '~{{ user.username }}'
+    creates: '~{{ user.username }}/.oh-my-zsh'
+  with_items: "{{ users }}"
+  when: user.install_oh_my_zsh | default('true')
   loop_control:
-    loop_var: username
+    loop_var: user
 
 - name: set permissions of oh-my-zsh for users
   become: yes
   file:
-    path: '~{{ username }}/.oh-my-zsh'
+    path: '~{{ user.username }}/.oh-my-zsh'
     # Prevent the cloned repository from having insecure permissions. Failing to do
     # so causes compinit() calls to fail with "command not found: compdef" errors
     # for users with insecure umasks (e.g., "002", allowing group writability).
     mode: 'go-w'
     recurse: yes
-  with_items: "{{ users | map(attribute='username') | list }}"
+  with_items: "{{ users }}"
+  when: user.install_oh_my_zsh | default('yes')
   loop_control:
-    loop_var: username
+    loop_var: user
 
 - name: set default shell for users
   become: yes
   user:
-    name: '{{ username }}'
+    name: '{{ user.username }}'
     shell: /bin/zsh
-  with_items: "{{ users | map(attribute='username') | list }}"
+  with_items: "{{ users }}"
+  when: user.install_oh_my_zsh | default('yes')
   loop_control:
-    loop_var: username
+    loop_var: user
 
 - name: write .zshrc for users
   become: yes
@@ -54,6 +57,7 @@
     backup: yes
     mode: 'u=rw,go=r'
   with_items: '{{ users }}'
+  when: user.install_oh_my_zsh | default('yes')
   loop_control:
     loop_var: user
     label: '{{ user.username }}'
