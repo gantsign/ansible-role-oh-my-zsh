@@ -63,6 +63,10 @@ oh_my_zsh_theme: robbyrussell
 oh_my_zsh_plugins:
   - git
 
+# Wether to install by default for all specified users.
+# May be overridden by `oh_my_zsh: install:` under each user.
+oh_my_zsh_install: yes
+
 # User configuration
 # Important: oh-my-zsh is installed per user so you need to specify the users to install it for.
 users:
@@ -77,6 +81,9 @@ users:
       plugins:
         - git
         - mvn
+  - username: example3
+    oh_my_zsh:
+      install: no
 ```
 
 Example Playbook
