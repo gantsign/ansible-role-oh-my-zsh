@@ -3,6 +3,13 @@
   hosts: all
 
   pre_tasks:
+
+    - name: update apt cache
+      apt:
+        update_cache: yes
+      when: ansible_os_family == 'Debian'
+      changed_when: no
+
     - name: create test users
       become: yes
       user:
