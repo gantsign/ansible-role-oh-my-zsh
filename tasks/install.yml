@@ -20,7 +20,7 @@
     chdir: '~{{ user.username }}'
     creates: '~{{ user.username }}/.oh-my-zsh'
   with_items: "{{ users }}"
-  when: user.install_oh_my_zsh | default('true')
+  when: "((user.oh_my_zsh | default({})).install | default(oh_my_zsh_install)) | bool"
   loop_control:
     loop_var: user
 
@@ -34,7 +34,7 @@
     mode: 'go-w'
     recurse: yes
   with_items: "{{ users }}"
-  when: user.install_oh_my_zsh | default('yes')
+  when: "((user.oh_my_zsh | default({})).install | default(oh_my_zsh_install)) | bool"
   loop_control:
     loop_var: user
 
@@ -44,7 +44,7 @@
     name: '{{ user.username }}'
     shell: /bin/zsh
   with_items: "{{ users }}"
-  when: user.install_oh_my_zsh | default('yes')
+  when: "((user.oh_my_zsh | default({})).install | default(oh_my_zsh_install)) | bool"
   loop_control:
     loop_var: user
 
@@ -57,7 +57,7 @@
     backup: yes
     mode: 'u=rw,go=r'
   with_items: '{{ users }}'
-  when: user.install_oh_my_zsh | default('yes')
+  when: "((user.oh_my_zsh | default({})).install | default(oh_my_zsh_install)) | bool"
   loop_control:
     loop_var: user
     label: '{{ user.username }}'

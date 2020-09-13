@@ -63,6 +63,10 @@ oh_my_zsh_theme: robbyrussell
 oh_my_zsh_plugins:
   - git
 
+# Wether to install by default for all specified users.
+# May be overridden by `oh_my_zsh: install:` under each user.
+oh_my_zsh_install: yes
+
 # User configuration
 # Important: oh-my-zsh is installed per user so you need to specify the users to install it for.
 users:
@@ -77,13 +81,9 @@ users:
       plugins:
         - git
         - mvn
-```
-Sometimes you would like to use list of users to create them in another role but with another shell. In this case you should disable installing oh_my_zsh for excluded user by specifying `install_oh_my_zsh: false` on single user dict.
-
-```yaml
-users:
-  - username: bashuser
-    install_oh_my_zsh: false
+  - username: example3
+    oh_my_zsh:
+      install: no
 ```
 
 Example Playbook
