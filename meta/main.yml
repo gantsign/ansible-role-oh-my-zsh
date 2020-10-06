@@ -4,7 +4,7 @@ galaxy_info:
   description: Role for installing and configuring oh-my-zsh.
   company: GantSign Ltd.
   license: MIT
-  min_ansible_version: 2.7
+  min_ansible_version: 2.8
   platforms:
     - name: EL
       versions:

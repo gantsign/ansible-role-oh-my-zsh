@@ -7,7 +7,7 @@ env:
     - MOLECULEW_USE_SYSTEM=true
   matrix:
     # Spin off separate builds for each of the following versions of Ansible
-    - MOLECULEW_ANSIBLE=2.7.15
+    - MOLECULEW_ANSIBLE=2.8.16
     - MOLECULEW_ANSIBLE=2.9.1
 
 # Require Ubuntu 16.04
