@@ -67,6 +67,9 @@ oh_my_zsh_plugins:
 # May be overridden by `oh_my_zsh: install:` under each user.
 oh_my_zsh_install: yes
 
+# Additional custom configuration
+oh_my_zsh_custom_config: ""
+
 # User configuration
 # Important: oh-my-zsh is installed per user so you need to specify the users to install it for.
 users:
@@ -81,6 +84,8 @@ users:
       plugins:
         - git
         - mvn
+      custom_config: |
+        source .profile
   - username: example3
     oh_my_zsh:
       install: no
