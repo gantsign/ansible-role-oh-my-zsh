@@ -9,5 +9,3 @@ oh_my_zsh_plugins:
 # Wether to install by default for all specified users.
 # May be overridden by `oh_my_zsh_install` under each user.
 oh_my_zsh_install: yes
-
-oh_my_zsh_extra_exports:
