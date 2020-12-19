@@ -7,6 +7,11 @@
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
+{% if oh_my_zsh_extra_exports is defined %}
+    {% for export in oh_my_zsh_extra_exports %}
+        export "{{ export }}"
+    {% endfor %}
+{% endif %}
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
