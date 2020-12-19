@@ -47,6 +47,9 @@
             plugins:
               - test_plugin3
               - test_plugin4
+            extra_exports:
+              - "PATH=$PATH:/usr/bin"
+              - "GOPATH=/usr/local/bin/go"
         - username: test_usr3
           oh_my_zsh:
             install: no
