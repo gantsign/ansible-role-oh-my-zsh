@@ -81,6 +81,8 @@ users:
       plugins:
         - git
         - mvn
+      extra_exports:
+        - GOPATH=/usr/local/bin/go
   - username: example3
     oh_my_zsh:
       install: no
