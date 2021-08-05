@@ -3,8 +3,8 @@
   become: "{{ ansible_distribution != 'MacOSX' }}"
   package:
     name:
-      - git
-      - zsh
+      - "{{ git_pkg | default('git') }}"
+      - "{{ zsh_pkg | default('zsh') }}"
     state: present
 
 - name: clone oh-my-zsh for users

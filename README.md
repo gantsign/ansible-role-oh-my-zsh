@@ -67,6 +67,12 @@ oh_my_zsh_plugins:
 # May be overridden by `oh_my_zsh: install:` under each user.
 oh_my_zsh_install: yes
 
+# Name of the git package of your Linux distribution
+git_pkg: git
+
+# Name of the zsh package of your Linux distribution
+zsh_pkg: zsh
+
 # User configuration
 # Important: oh-my-zsh is installed per user so you need to specify the users to install it for.
 users:
