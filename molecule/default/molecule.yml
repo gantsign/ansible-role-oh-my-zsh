@@ -20,8 +20,8 @@ platforms:
     image: ubuntu:18.04
   - name: ansible-role-oh-my-zsh-ubuntu-max
     image: ubuntu:20.04
-  - name: ansible-role-oh-my-zsh-centos
-    image: centos:7
+  - name: ansible-role-oh-my-zsh-rocky
+    image: rockylinux/rockylinux:8
   - name: ansible-role-oh-my-zsh-fedora
     image: fedora:31
   - name: ansible-role-oh-my-zsh-opensuse
