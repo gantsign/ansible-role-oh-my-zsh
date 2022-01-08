@@ -13,7 +13,7 @@ lint: |
 
 platforms:
   - name: ansible-role-oh-my-zsh-debian-min
-    image: debian:8
+    image: debian:9
   - name: ansible-role-oh-my-zsh-debian-max
     image: debian:11
   - name: ansible-role-oh-my-zsh-ubuntu-min
