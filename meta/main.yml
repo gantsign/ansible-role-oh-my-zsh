@@ -11,7 +11,7 @@ galaxy_info:
         - 8
     - name: Fedora
       versions:
-        - 31
+        - 35
     - name: opensuse
       versions:
         - 15.1
