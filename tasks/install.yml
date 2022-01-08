@@ -2,9 +2,7 @@
 - name: install dependencies
   become: "{{ ansible_distribution != 'MacOSX' }}"
   package:
-    name:
-      - git
-      - zsh
+    name: '{{ oh_my_zsh_dependencies }}'
     state: present
 
 - name: clone oh-my-zsh for users
