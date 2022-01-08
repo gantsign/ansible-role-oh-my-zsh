@@ -17,7 +17,6 @@ galaxy_info:
         - 15.1
     - name: Ubuntu
       versions:
-        - xenial
         - bionic
         - focal
     - name: Debian
