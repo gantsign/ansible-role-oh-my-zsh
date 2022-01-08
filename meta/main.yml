@@ -19,6 +19,7 @@ galaxy_info:
       versions:
         - xenial
         - bionic
+        - focal
     - name: Debian
       versions:
         - stretch
