@@ -23,7 +23,7 @@ platforms:
   - name: ansible-role-oh-my-zsh-rocky
     image: rockylinux/rockylinux:8
   - name: ansible-role-oh-my-zsh-fedora
-    image: fedora:31
+    image: fedora:35
   - name: ansible-role-oh-my-zsh-opensuse
     image: opensuse/leap:15.1
 
