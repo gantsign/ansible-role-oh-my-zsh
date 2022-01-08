@@ -1,7 +1,7 @@
 Ansible Role: Oh My Zsh
 =======================
 
-[![Build Status](https://travis-ci.com/gantsign/ansible-role-oh-my-zsh.svg?branch=master)](https://travis-ci.com/gantsign/ansible-role-oh-my-zsh)
+[![Tests](https://github.com/gantsign/ansible-role-oh-my-zsh/workflows/Tests/badge.svg)](https://github.com/gantsign/ansible-role-oh-my-zsh/actions?query=workflow%3ATests)s
 [![Ansible Galaxy](https://img.shields.io/badge/ansible--galaxy-gantsign.oh--my--zsh-blue.svg)](https://galaxy.ansible.com/gantsign/oh-my-zsh)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/gantsign/ansible-role-oh-my-zsh/master/LICENSE)
 
