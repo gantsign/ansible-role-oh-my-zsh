@@ -14,7 +14,7 @@ galaxy_info:
         - 35
     - name: opensuse
       versions:
-        - 15.1
+        - 15.3
     - name: Ubuntu
       versions:
         - bionic

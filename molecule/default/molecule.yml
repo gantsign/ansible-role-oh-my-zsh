@@ -25,7 +25,7 @@ platforms:
   - name: ansible-role-oh-my-zsh-fedora
     image: fedora:35
   - name: ansible-role-oh-my-zsh-opensuse
-    image: opensuse/leap:15.1
+    image: opensuse/leap:15.3
 
 provisioner:
   name: ansible
