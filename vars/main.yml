@@ -1,2 +1,5 @@
 ---
-# vars file for oh-my-zsh
+# Dependencies for Oh My Zsh
+oh_my_zsh_dependencies:
+  - git
+  - zsh
