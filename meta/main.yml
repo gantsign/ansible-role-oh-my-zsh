@@ -23,6 +23,8 @@ galaxy_info:
       versions:
         - jessie
         - stretch
+        - buster
+        - bullseye
   galaxy_tags:
     - ohmyzsh
     - zsh
