@@ -46,7 +46,7 @@ Requirements
 
         * openSUSE
 
-            * 15.1
+            * 15.3
 
     * Note: other versions are likely to work but have not been tested.
 
