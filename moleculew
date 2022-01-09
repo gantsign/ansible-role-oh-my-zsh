@@ -28,7 +28,7 @@
 
 set -e
 
-WRAPPER_VERSION=1.1.0
+WRAPPER_VERSION=1.1.1
 
 VERSION_DIR='.moleculew'
 PYTHON_VERSION_FILE="$VERSION_DIR/python_version"
@@ -236,6 +236,14 @@ virtualenv_presant() {
         "$PYTHON_EXE" -m pip install --user virtualenv
         echo ''
     fi
+}
+
+install_rich() {
+    # Workaround breaking changes in rich 11 by installing version 10
+    local RICH_VERSION='10.16.2'
+    banner "Installing Rich $RICH_VERSION into virtualenv $VIRTUAL_ENV"
+    pip install "rich==$RICH_VERSION"
+    echo ''
 }
 
 install_ansible() {
@@ -864,6 +872,9 @@ activate_virtualenv() {
         # shellcheck disable=SC1090
         source "$MOLECULE_WRAPPER_ENV/bin/activate"
         echo ''
+
+        # Workaround breaking changes in rich 11 by installing version 10
+        install_rich
 
         install_ansible
 
