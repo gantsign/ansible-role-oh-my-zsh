@@ -8,9 +8,5 @@ on:
 jobs:
   release:
     name: Release
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Import role into Ansible Galaxy
-        uses: gantsign/ansible-galaxy-import-action@v1
-        with:
-          api-key: ${{ secrets.GALAXY_API_KEY }}
+    uses: gantsign/workflows/.github/workflows/ansible-galaxy-import.yml@v1
+    secrets: inherit
