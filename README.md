@@ -7,11 +7,6 @@ Ansible Role: Oh My Zsh
 
 Role to download, install and configure [Oh-My-Zsh](http://ohmyz.sh/).
 
-**Note:** you may be better off using the alternative
-[gantsign.ansible_role_antigen](https://galaxy.ansible.com/gantsign/antigen)
-role that can install third-party Zsh plugins as well as installing Oh My Zsh
-and its plugins.
-
 Requirements
 ------------
 
