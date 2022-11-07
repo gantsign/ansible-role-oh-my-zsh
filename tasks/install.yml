@@ -12,8 +12,8 @@
     - skip_ansible_lint
   become: yes
   become_user: '{{ user.username }}'
-  # core.autocrlf=input prevents https://github.com/robbyrussell/oh-my-zsh/issues/4402
-  command: 'git clone -c core.autocrlf=input --depth=1 https://github.com/robbyrussell/oh-my-zsh.git .oh-my-zsh'
+  # core.autocrlf=input prevents https://github.com/ohmyzsh/ohmyzsh/issues/4402
+  command: 'git clone -c core.autocrlf=input --depth=1 https://github.com/ohmyzsh/ohmyzsh.git .oh-my-zsh'
   args:
     chdir: '~{{ user.username }}'
     creates: '~{{ user.username }}/.oh-my-zsh'
