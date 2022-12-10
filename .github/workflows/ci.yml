@@ -28,16 +28,16 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.8'
 
       - name: Cache Molecule
         id: molecule-cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/.moleculew
           key: Ansible-${{ matrix.ansible-version }}-${{ hashFiles('.moleculew/**') }}
@@ -51,7 +51,7 @@ jobs:
 
       - name: Login to Docker Hub
         if: '!github.event.pull_request || github.event.pull_request.head.repo.full_name == github.repository'
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
