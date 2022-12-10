@@ -59,7 +59,7 @@ oh_my_zsh_theme: robbyrussell
 oh_my_zsh_plugins:
   - git
 
-# Wether to install by default for all specified users.
+# Whether to install by default for all specified users.
 # May be overridden by `oh_my_zsh: install:` under each user.
 oh_my_zsh_install: yes
 
