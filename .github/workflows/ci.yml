@@ -37,7 +37,7 @@ jobs:
 
       - name: Cache Molecule
         id: molecule-cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/.moleculew
           key: Ansible-${{ matrix.ansible-version }}-${{ hashFiles('.moleculew/**') }}
