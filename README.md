@@ -63,6 +63,13 @@ oh_my_zsh_plugins:
 # May be overridden by `oh_my_zsh: install:` under each user.
 oh_my_zsh_install: yes
 
+# Update mode for Ohmyzsh
+# accepted values are:
+# disabled (default)
+# auto
+# reminder
+oh_my_zsh_update_mode: disabled
+
 # User configuration
 # Important: oh-my-zsh is installed per user so you need to specify the users to install it for.
 users:
@@ -71,12 +78,14 @@ users:
       theme: robbyrussell
       plugins:
         - git
+      update_mode: reminder
   - username: example2
     oh_my_zsh:
       theme: robbyrussell
       plugins:
         - git
         - mvn
+      update_mode: auto
   - username: example3
     oh_my_zsh:
       install: no

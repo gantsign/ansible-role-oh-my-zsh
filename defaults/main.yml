@@ -9,3 +9,9 @@ oh_my_zsh_plugins:
 # Whether to install by default for all specified users.
 # May be overridden by `oh_my_zsh_install` under each user.
 oh_my_zsh_install: yes
+
+# Update mode accepted values are:
+# disabled (default)
+# auto
+# reminder
+oh_my_zsh_update_mode: disabled
