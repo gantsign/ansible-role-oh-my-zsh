@@ -27,10 +27,10 @@ ZSH_THEME="{{ oh_my_zsh.theme | default(oh_my_zsh_theme) }}"
 # Case-sensitive completion must be off. _ and - will be interchangeable.
 # HYPHEN_INSENSITIVE="true"
 
-{% if 'auto' == oh_my_zsh.update_mode %}
+{% if 'auto' == oh_my_zsh.update_mode | default(oh_my_zsh_update_mode) %}
 # update automatically without asking
 zstyle ':omz:update' mode auto
-{% elif 'reminder' == oh_my_zsh.update_mode %}
+{% elif 'reminder' == oh_my_zsh.update_mode | default(oh_my_zsh_update_mode) %}
 # just remind me to update when it's time
 zstyle ':omz:update' mode reminder
 {% else %}

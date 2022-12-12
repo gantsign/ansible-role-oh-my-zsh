@@ -25,11 +25,11 @@ def test_oh_my_zsh_is_not_installed_for_excluded_users(host, username):
     assert not zshrc.exists
 
 
-@pytest.mark.parametrize('username,theme,plugins', [
-    ('test_usr1', 'test_theme1', 'test_plugin1 test_plugin2'),
-    ('test_usr2', 'test_theme2', 'test_plugin3 test_plugin4'),
+@pytest.mark.parametrize('username,theme,plugins,update_mode', [
+    ('test_usr1', 'test_theme1', 'test_plugin1 test_plugin2', 'auto'),
+    ('test_usr2', 'test_theme2', 'test_plugin3 test_plugin4', 'auto'),
 ])
-def test_oh_my_zsh_config(host, username, theme, plugins):
+def test_oh_my_zsh_config(host, username, theme, plugins, update_mode):
     zshrc = host.file('/home/' + username + '/.zshrc')
     assert zshrc.exists
     assert zshrc.is_file
@@ -37,6 +37,7 @@ def test_oh_my_zsh_config(host, username, theme, plugins):
     assert zshrc.group in [username, 'users']
     assert zshrc.contains(theme)
     assert zshrc.contains(plugins)
+    assert zshrc.contains(update_mode)
 
 
 def test_console_setup(host):
