@@ -70,6 +70,11 @@ oh_my_zsh_install: yes
 # reminder
 oh_my_zsh_update_mode: disabled
 
+
+# Update frequency in days, depends on the update mode
+# being any other than disabled (default)
+oh_my_zsh_update_frequency: 13
+
 # User configuration
 # Important: oh-my-zsh is installed per user so you need to specify the users to install it for.
 users:
