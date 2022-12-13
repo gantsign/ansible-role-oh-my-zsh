@@ -79,6 +79,7 @@ users:
       plugins:
         - git
       update_mode: reminder
+      update_frequency: 3
   - username: example2
     oh_my_zsh:
       theme: robbyrussell
@@ -86,6 +87,7 @@ users:
         - git
         - mvn
       update_mode: auto
+      update_frequency: 10
   - username: example3
     oh_my_zsh:
       install: no
