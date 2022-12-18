@@ -63,16 +63,16 @@ oh_my_zsh_plugins:
 # May be overridden by `oh_my_zsh: install:` under each user.
 oh_my_zsh_install: yes
 
-# Update mode for Ohmyzsh
+# Default update mode for Oh-My-Zsh
 # accepted values are:
 # disabled (default)
 # auto
 # reminder
 oh_my_zsh_update_mode: disabled
 
-
-# Update frequency in days, depends on the update mode
-# being any other than disabled (default)
+# Default update frequency in days. When the update mode is set to a value other
+# than "disabled", this is the frequency (in days) to check for a new version.
+# The value 0 will check every time a new shell session starts.
 oh_my_zsh_update_frequency: 13
 
 # User configuration

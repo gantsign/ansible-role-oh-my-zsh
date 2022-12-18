@@ -48,7 +48,7 @@
               - test_plugin3
               - test_plugin4
             update_mode: auto
-            update_frequency: 13
+            update_frequency: 31
         - username: test_usr3
           oh_my_zsh:
             install: no
