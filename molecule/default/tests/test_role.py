@@ -1,4 +1,5 @@
 import pytest
+import re
 
 
 @pytest.mark.parametrize('username', [
@@ -25,11 +26,21 @@ def test_oh_my_zsh_is_not_installed_for_excluded_users(host, username):
     assert not zshrc.exists
 
 
-@pytest.mark.parametrize('username,theme,plugins', [
-    ('test_usr1', 'test_theme1', 'test_plugin1 test_plugin2'),
-    ('test_usr2', 'test_theme2', 'test_plugin3 test_plugin4'),
-])
-def test_oh_my_zsh_config(host, username, theme, plugins):
+@pytest.mark.parametrize('username,theme,plugins,update_mode,update_frequency',
+                         [
+                             ('test_usr1',
+                              'test_theme1',
+                              'test_plugin1 test_plugin2',
+                              'disabled',
+                              '13'),
+                             ('test_usr2',
+                              'test_theme2',
+                              'test_plugin3 test_plugin4',
+                              'auto',
+                              '31'),
+                         ])
+def test_oh_my_zsh_config(host, username, theme, plugins,
+                          update_mode, update_frequency):
     zshrc = host.file('/home/' + username + '/.zshrc')
     assert zshrc.exists
     assert zshrc.is_file
@@ -37,6 +48,18 @@ def test_oh_my_zsh_config(host, username, theme, plugins):
     assert zshrc.group in [username, 'users']
     assert zshrc.contains(theme)
     assert zshrc.contains(plugins)
+
+    pattern = f"zstyle ':omz:update' mode {update_mode}"
+    pattern = r'^' + re.escape(pattern) + r'$'
+    assert re.search(pattern, zshrc.content_string, re.MULTILINE), (
+        f"{username}: Pattern '{pattern}' not found in {zshrc.content_string}")
+
+    pattern = f"zstyle ':omz:update' frequency {update_frequency}"
+    if update_mode == 'disabled':
+        pattern = f'# {pattern}'
+    pattern = r'^' + re.escape(pattern) + r'$'
+    assert re.search(pattern, zshrc.content_string, re.MULTILINE), (
+        f"{username}: Pattern '{pattern}' not found in {zshrc.content_string}")
 
 
 def test_console_setup(host):
