@@ -4,20 +4,20 @@
 # If the console-setup file is missing don't create it... assume we're
 # running in an environment without a boot console (e.g. docker).
 - name: check if console-setup exists
-  stat:
+  ansible.builtin.stat:
     path: /etc/default/console-setup
   register: console_setup_file
 
 - name: install console-setup
   become: yes
-  apt:
+  ansible.builtin.apt:
     name: console-setup
     state: present
   when: console_setup_file.stat.exists
 
 - name: edit console-setup to utf-8
   become: yes
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: /etc/default/console-setup
     regexp: ^CHARMAP=
     line: CHARMAP="UTF-8"

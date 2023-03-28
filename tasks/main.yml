@@ -1,6 +1,17 @@
 ---
-- import_tasks: install.yml
+- name: Setting OS variables
+  ansible.builtin.include_vars: "{{lookup('ansible.builtin.first_found', params)}}"
+    vars:
+      params:
+        files:
+          - "{{ ansible_distribution }}.yml"
+          - "{{ ansible_os_family }}.yml"
+          - "default.yml"
+        paths:
+          - "vars"
+
+- ansible.builtin.import_tasks: install.yml
 
 - name: console setup for Debian family distributions
-  include_tasks: debian-console-setup.yml
+  ansible.builtin.include_tasks: debian-console-setup.yml
   when: ansible_os_family == 'Debian'
