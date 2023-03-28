@@ -1,6 +1,6 @@
 ---
-- import_tasks: install.yml
+- ansible.builtin.import_tasks: install.yml
 
 - name: console setup for Debian family distributions
-  include_tasks: debian-console-setup.yml
+  ansible.builtin.include_tasks: debian-console-setup.yml
   when: ansible_os_family == 'Debian'
