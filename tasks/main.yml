@@ -1,5 +1,6 @@
 ---
-- ansible.builtin.import_tasks: install.yml
+- name: Install Oh My Zsh
+  ansible.builtin.import_tasks: install.yml
 
 - name: console setup for Debian family distributions
   ansible.builtin.include_tasks: debian-console-setup.yml
