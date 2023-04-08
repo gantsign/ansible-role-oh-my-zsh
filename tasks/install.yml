@@ -1,16 +1,17 @@
+# code: language=ansible
 ---
-- name: install dependencies
+- name: Install dependencies
   become: "{{ ansible_distribution != 'MacOSX' }}"
   ansible.builtin.package:
     name: '{{ oh_my_zsh_dependencies }}'
     state: present
 
-- name: clone oh-my-zsh for users
+- name: Clone oh-my-zsh for users
   tags:
     # Suppress warning: [ANSIBLE0006] git used in place of git module
     # Git module doesn't allow us to set `core.autocrlf=input`.
     - skip_ansible_lint
-  become: yes
+  become: true
   become_user: '{{ user.username }}'
   # core.autocrlf=input prevents https://github.com/ohmyzsh/ohmyzsh/issues/4402
   ansible.builtin.command: 'git clone -c core.autocrlf=input --depth=1 https://github.com/ohmyzsh/ohmyzsh.git .oh-my-zsh'
@@ -23,23 +24,23 @@
     loop_var: user
     label: '{{ user.username }}'
 
-- name: set permissions of oh-my-zsh for users
-  become: yes
+- name: Set permissions of oh-my-zsh for users
+  become: true
   ansible.builtin.file:
     path: '~{{ user.username }}/.oh-my-zsh'
     # Prevent the cloned repository from having insecure permissions. Failing to do
     # so causes compinit() calls to fail with "command not found: compdef" errors
     # for users with insecure umasks (e.g., "002", allowing group writability).
     mode: 'go-w'
-    recurse: yes
+    recurse: true
   with_items: "{{ users }}"
   when: "((user.oh_my_zsh | default({})).install | default(oh_my_zsh_install)) | bool"
   loop_control:
     loop_var: user
     label: '{{ user.username }}'
 
-- name: set default shell for users
-  become: yes
+- name: Set default shell for users
+  become: true
   ansible.builtin.user:
     name: '{{ user.username }}'
     shell: "{{ path_zsh }}"
@@ -49,13 +50,13 @@
     loop_var: user
     label: '{{ user.username }}'
 
-- name: write .zshrc for users
-  become: yes
+- name: Write .zshrc for users
+  become: true
   become_user: '{{ user.username }}'
   ansible.builtin.template:
     src: zshrc.j2
     dest: '~{{ user.username }}/.zshrc'
-    backup: yes
+    backup: true
     mode: 'u=rw,go=r'
   with_items: '{{ users }}'
   when: "((user.oh_my_zsh | default({})).install | default(oh_my_zsh_install)) | bool"

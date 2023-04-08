@@ -1,3 +1,4 @@
+# code: language=ansible
 ---
 - name: Setting OS variables
   ansible.builtin.include_vars: "{{lookup('ansible.builtin.first_found', params)}}"
@@ -10,8 +11,9 @@
       paths:
         - "vars"
 
-- ansible.builtin.import_tasks: install.yml
+- name: Install Oh My Zsh
+  ansible.builtin.import_tasks: install.yml
 
-- name: console setup for Debian family distributions
+- name: Console setup for Debian family distributions
   ansible.builtin.include_tasks: debian-console-setup.yml
   when: ansible_os_family == 'Debian'

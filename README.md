@@ -10,7 +10,7 @@ Role to download, install and configure [Oh-My-Zsh](http://ohmyz.sh/).
 Requirements
 ------------
 
-* Ansible >= 2.9
+* Ansible >= 5 (Ansible Core >= 2.12)
 
 * Linux Distribution
 
@@ -61,7 +61,7 @@ oh_my_zsh_plugins:
 
 # Whether to install by default for all specified users.
 # May be overridden by `oh_my_zsh: install:` under each user.
-oh_my_zsh_install: yes
+oh_my_zsh_install: true
 
 # Default update mode for Oh-My-Zsh
 # accepted values are:
@@ -95,7 +95,7 @@ users:
       update_frequency: 10
   - username: example3
     oh_my_zsh:
-      install: no
+      install: false
 ```
 
 Example Playbook
