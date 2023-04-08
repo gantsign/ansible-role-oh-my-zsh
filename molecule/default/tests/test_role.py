@@ -5,7 +5,7 @@ import re
 @pytest.mark.parametrize('username', [
     'test_usr1',
     'test_usr2',
-    'test_usr5',
+    'test_usr6',
 ])
 def test_oh_my_zsh_install(host, username):
     oh_my_zsh = host.file('/home/' + username + '/.oh-my-zsh')
@@ -17,12 +17,21 @@ def test_oh_my_zsh_install(host, username):
 
 @pytest.mark.parametrize('username', [
     'test_usr3',
-    'test_usr4',
+    'test_usr5',
 ])
 def test_oh_my_zsh_is_not_installed_for_excluded_users(host, username):
     oh_my_zsh = host.file('/home/' + username + '/.oh-my-zsh')
     zshrc = host.file('/home/' + username + '/.zshrc')
     assert not oh_my_zsh.exists
+    assert not zshrc.exists
+
+
+@pytest.mark.parametrize('username', [
+    'test_usr4',
+    'test_usr5',
+])
+def test_oh_my_zshrc_is_not_installed_for_excluded_users(host, username):
+    zshrc = host.file('/home/' + username + '/.zshrc')
     assert not zshrc.exists
 
 

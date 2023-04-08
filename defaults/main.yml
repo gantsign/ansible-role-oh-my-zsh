@@ -22,3 +22,7 @@ oh_my_zsh_update_mode: disabled
 # than "disabled", this is the frequency (in days) to check for a new version.
 # The value 0 will check every time a new shell session starts.
 oh_my_zsh_update_frequency: 13
+
+# Whether to write the ~/.zshrc file
+# May be overridden by `oh_my_zsh: write_zshrc:` under each user.
+oh_my_zsh_write_zshrc: true

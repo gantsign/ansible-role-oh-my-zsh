@@ -75,6 +75,10 @@ oh_my_zsh_update_mode: disabled
 # The value 0 will check every time a new shell session starts.
 oh_my_zsh_update_frequency: 13
 
+# Whether to write the ~/.zshrc file
+# May be overridden by `oh_my_zsh: write_zshrc:` under each user.
+oh_my_zsh_write_zshrc: true
+
 # User configuration
 # Important: oh-my-zsh is installed per user so you need to specify the users to install it for.
 users:
@@ -85,6 +89,7 @@ users:
         - git
       update_mode: reminder
       update_frequency: 3
+      write_zshrc: false
   - username: example2
     oh_my_zsh:
       theme: robbyrussell
