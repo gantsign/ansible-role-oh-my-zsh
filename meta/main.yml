@@ -26,7 +26,7 @@ galaxy_info:
         - bullseye
     - name: FreeBSD
       versions:
-        - 13
+        - '13.0'
   galaxy_tags:
     - ohmyzsh
     - zsh
