@@ -20,7 +20,7 @@ jobs:
     strategy:
       matrix:
         ansible-version:
-          - '6.4.0' # max-ansible-test-version
+          - '7.3.0' # max-ansible-test-version
           - '5.10.0' # min-ansible-test-version
 
     env:
@@ -33,7 +33,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.8'
+          python-version: '3.9'
 
       - name: Cache Molecule
         id: molecule-cache
