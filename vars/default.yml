@@ -1,0 +1,4 @@
+# code: language=ansible
+---
+# The path to the ZSH executable
+oh_my_zsh_zsh_path: /bin/zsh
