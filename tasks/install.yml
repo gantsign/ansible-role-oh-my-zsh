@@ -43,7 +43,7 @@
   become: true
   ansible.builtin.user:
     name: '{{ user.username }}'
-    shell: "{{ path_zsh }}"
+    shell: "{{ oh_my_zsh_zsh_path }}"
   with_items: "{{ users }}"
   when: "((user.oh_my_zsh | default({})).install | default(oh_my_zsh_install)) | bool"
   loop_control:
