@@ -1,7 +1,7 @@
 # code: language=ansible
 ---
 - name: Install dependencies
-  become: "{{ ansible_distribution != 'MacOSX' }}"
+  become: "{{ ansible_facts.distribution != 'MacOSX' }}"
   ansible.builtin.package:
     name: '{{ oh_my_zsh_dependencies }}'
     state: present
