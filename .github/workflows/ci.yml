@@ -20,8 +20,8 @@ jobs:
     strategy:
       matrix:
         ansible-version:
-          - '2.10.7' # max-ansible-test-version
-          - '2.9.26' # min-ansible-test-version
+          - '6.4.0' # max-ansible-test-version
+          - '5.10.0' # min-ansible-test-version
 
     env:
       MOLECULEW_ANSIBLE: ${{ matrix.ansible-version }}

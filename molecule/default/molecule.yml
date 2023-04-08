@@ -5,6 +5,8 @@ dependency:
 driver:
   name: docker
 
+role_name_check: 2
+
 lint: |
   set -e
   yamllint .
