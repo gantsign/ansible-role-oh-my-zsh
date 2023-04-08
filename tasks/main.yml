@@ -1,15 +1,14 @@
 # code: language=ansible
 ---
 - name: Setting OS variables
-  ansible.builtin.include_vars: "{{lookup('ansible.builtin.first_found', params)}}"
+  ansible.builtin.include_vars: "{{ lookup('ansible.builtin.first_found', params) }}"
   vars:
     params:
       files:
-        - "{{ ansible_distribution }}.yml"
-        - "{{ ansible_os_family }}.yml"
-        - "default.yml"
+        - "{{ ansible_facts.os_family }}.yml"
+        - default.yml
       paths:
-        - "vars"
+        - vars
 
 - name: Install Oh My Zsh
   ansible.builtin.import_tasks: install.yml
