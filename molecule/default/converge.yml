@@ -23,6 +23,7 @@
         - test_usr3
         - test_usr4
         - test_usr5
+        - test_usr6
 
     - name: Install console-setup file
       become: true
@@ -53,6 +54,9 @@
         - username: test_usr3
           oh_my_zsh:
             install: false
+        - username: test_usr4
+          oh_my_zsh:
+            write_zshrc: false
 
     - role: ansible-role-oh-my-zsh
       oh_my_zsh_theme: test_theme1
@@ -60,11 +64,13 @@
         - test_plugin1
         - test_plugin2
       oh_my_zsh_install: false
+      oh_my_write_zshrc: false
       users:
-        - username: test_usr4
         - username: test_usr5
+        - username: test_usr6
           oh_my_zsh:
             install: true
+            write_zshrc: true
             theme: test_theme2
             plugins:
               - test_plugin3

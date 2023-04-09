@@ -59,7 +59,11 @@
     backup: true
     mode: 'u=rw,go=r'
   with_items: '{{ users }}'
-  when: "((user.oh_my_zsh | default({})).install | default(oh_my_zsh_install)) | bool"
+  vars:
+    user_oh_my_zsh: '{{ user.oh_my_zsh | default({}) }}'
+  when: >-
+    ((user_oh_my_zsh.install | default(oh_my_zsh_install)) | bool)
+    and ((user_oh_my_zsh.write_zshrc | default(oh_my_zsh_write_zshrc)) | bool)
   loop_control:
     loop_var: user
     label: '{{ user.username }}'
