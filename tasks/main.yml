@@ -10,8 +10,19 @@
       paths:
         - vars/os_family
 
+- name: Install dependencies
+  become: "{{ ansible_facts.distribution != 'MacOSX' }}"
+  ansible.builtin.package:
+    name: '{{ oh_my_zsh_dependencies }}'
+    state: present
+
 - name: Install Oh My Zsh
+  become: true
   ansible.builtin.import_tasks: install.yml
+  with_items: "{{ users }}"
+  loop_control:
+    loop_var: user
+    label: '{{ user.username }}'
 
 - name: Console setup for Debian family distributions
   ansible.builtin.include_tasks: debian-console-setup.yml

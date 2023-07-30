@@ -79,6 +79,24 @@ oh_my_zsh_update_frequency: 13
 # May be overridden by `oh_my_zsh: write_zshrc:` under each user.
 oh_my_zsh_write_zshrc: true
 
+# Custom themes
+# These external themes will be installed for those users that specify them as their theme.
+# Themes may require installation of additional dependencies like fonts to display correctly and
+# may have scripts or 'wizards' that must be run to configure themselves
+themes:
+  - name: themename
+    source: https://github.com/someuser/themename.git
+
+# Custom plugins
+# These external plugins will be installed for those users that include them in their plugin list.
+plugins:
+  - name: zsh-autosuggestions
+    repo: https://github.com/zsh-users/zsh-autosuggestions.git
+  - name: zsh-hist
+    repo: https://github.com/marlonrichert/zsh-hist.git
+  - name: zsh-syntax-highlighting
+    repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
+
 # User configuration
 # Important: oh-my-zsh is installed per user so you need to specify the users to install it for.
 users:
@@ -110,8 +128,27 @@ Example Playbook
 - hosts: servers
   roles:
     - role: gantsign.oh-my-zsh
+      themes:
+        - name: powerlevel10k
+          source: https://github.com/romkatv/powerlevel10k.git
+      plugins:
+        - name: zsh-autosuggestions
+          source: https://github.com/zsh-users/zsh-autosuggestions.git
+        - name: zsh-hist
+          source: https://github.com/marlonrichert/zsh-hist.git
+        - name: zsh-syntax-highlighting
+          source: https://github.com/zsh-users/zsh-syntax-highlighting.git
       users:
         - username: example
+          oh_my_zsh:
+            theme: powerlevel10k
+          plugins:
+            - git
+            - virtualenv
+            - colored-man-pages
+            - zsh-autosuggestions
+            - zsh-hist
+            - zsh-syntax-highlighting
 ```
 
 More Roles From GantSign
