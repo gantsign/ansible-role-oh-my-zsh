@@ -8,14 +8,14 @@ oh_my_zsh_plugins:
   - git
 
 # Whether to install by default for all specified users.
-# May be overridden by `oh_my_zsh_install` under each user.
+# May be overridden by `oh_my_zsh: install:` under each user.
 oh_my_zsh_install: true
 
 # Default update mode for Oh-My-Zsh
 # accepted values are:
-# disabled (default)
-# auto
-# reminder
+#   disabled (default)
+#   auto
+#   reminder
 oh_my_zsh_update_mode: disabled
 
 # Default update frequency in days. When the update mode is set to a value other

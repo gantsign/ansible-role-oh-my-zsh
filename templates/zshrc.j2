@@ -1,7 +1,5 @@
 {{ ansible_managed | comment }}
 
-{% set oh_my_zsh = user.oh_my_zsh|default({}) %}
-
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -12,10 +10,12 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-{% if oh_my_zsh.theme | default(oh_my_zsh_theme) in (themes | default([])).name %}
-ZSH_THEME="{{ oh_my_zsh.theme | default(oh_my_zsh_theme) }}/{{ oh_my_zsh.theme | default(oh_my_zsh_theme) }}"
+{% set theme = oh_my_zsh.theme | default(oh_my_zsh_theme) %}
+{% if customtheme.stat.exists %}
+ZSH_THEME="{{ theme }}/{{ theme }}"
 {% else %}
-ZSH_THEME="{{ oh_my_zsh.theme | default(oh_my_zsh_theme) }}"
+ZSH_THEME="{{ theme }}"
+{% endif %}
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -30,10 +30,11 @@ ZSH_THEME="{{ oh_my_zsh.theme | default(oh_my_zsh_theme) }}"
 # Case-sensitive completion must be off. _ and - will be interchangeable.
 # HYPHEN_INSENSITIVE="true"
 
-{% if 'auto' == oh_my_zsh.update_mode | default(oh_my_zsh_update_mode) %}
+{% set update_mode = oh_my_zsh.update_mode | default(oh_my_zsh_update_mode) %}
+{% if 'auto' == update_mode %}
 # Update automatically without asking
 zstyle ':omz:update' mode auto
-{% elif 'reminder' == oh_my_zsh.update_mode | default(oh_my_zsh_update_mode) %}
+{% elif 'reminder' == update_mode %}
 # Just remind me to update when it's time
 zstyle ':omz:update' mode reminder
 {% else %}
@@ -42,10 +43,11 @@ zstyle ':omz:update' mode disabled
 {% endif %}
 
 # How often to auto-update (in days).
-{% if 'disabled' != oh_my_zsh.update_mode | default(oh_my_zsh_update_mode) %}
-zstyle ':omz:update' frequency {{ oh_my_zsh.update_frequency | default(oh_my_zsh_update_frequency) }}
+{% set update_frequency = oh_my_zsh.update_frequency | default(oh_my_zsh_update_frequency) %}
+{% if 'disabled' != update_mode %}
+zstyle ':omz:update' frequency {{ update_frequency }}
 {% else %}
-# zstyle ':omz:update' frequency {{ oh_my_zsh.update_frequency | default(oh_my_zsh_update_frequency) }}
+# zstyle ':omz:update' frequency {{ update_frequency }}
 {% endif %}
 
 # Uncomment the following line if pasting URLs and other text is messed up.

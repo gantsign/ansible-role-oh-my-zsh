@@ -1,5 +1,14 @@
 # code: language=ansible
 ---
+# Default dictionary
+oh_my_zsh_defaults:
+  theme: "{{ oh_my_zsh_theme }}"
+  plugins: "{{ oh_my_zsh_plugins }}"
+  install: "{{ oh_my_zsh_install }}"
+  update_mode: "{{ oh_my_zsh_update_mode }}"
+  update_frequency: "{{ oh_my_zsh_update_frequency }}"
+  write_zshrc: "{{ oh_my_zsh_write_zshrc }}"
+
 # Dependencies for Oh My Zsh
 oh_my_zsh_dependencies:
   - git

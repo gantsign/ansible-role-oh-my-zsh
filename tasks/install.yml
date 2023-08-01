@@ -1,63 +1,82 @@
 # code: language=ansible
 ---
-- name: Install for specified users
-  when: (user.oh_my_zsh | default({})).install | default(oh_my_zsh_install) | bool
-  block:
-    - name: Clone oh-my-zsh
-      tags:
-        # Suppress warning: [ANSIBLE0006] git used in place of git module
-        # Git module doesn't allow us to set `core.autocrlf=input`.
-        - skip_ansible_lint
-      become_user: "{{ user.username }}"
-      # core.autocrlf=input prevents https://github.com/ohmyzsh/ohmyzsh/issues/4402
-      ansible.builtin.command: 'git clone -c core.autocrlf=input --depth=1 https://github.com/ohmyzsh/ohmyzsh.git .oh-my-zsh'
-      args:
-        chdir: "~{{ user.username }}"
-        creates: "~{{ user.username }}/.oh-my-zsh"
+- name: Clone oh-my-zsh
+  tags:
+    # Suppress warning: [ANSIBLE0006] git used in place of git module
+    # Git module doesn't allow us to set `core.autocrlf=input`.
+    - skip_ansible_lint
+  become: true
+  become_user: "{{ user.name }}"
+  # core.autocrlf=input prevents https://github.com/ohmyzsh/ohmyzsh/issues/4402
+  ansible.builtin.command: 'git clone -c core.autocrlf=input --depth=1 https://github.com/ohmyzsh/ohmyzsh.git .oh-my-zsh'
+  args:
+    chdir: "~{{ user.name }}"
+    creates: "~{{ user.name }}/.oh-my-zsh"
 
-    - name: Clone custom themes
-      ansible.builtin.shell:
-        cmd: "git clone --depth=1 {{ theme.source }}"
-        chdir: "~{{ user.username }}/.oh-my-zsh/custom/themes"
-        creates: "./{{ theme.name }}/{{ theme.name }}"
-      when: "((user.oh_my_zsh | default({})).theme | default(oh_my_zsh_theme)) == theme.name"
-      with_items: "{{ themes }}"
-      loop_control:
-        loop_var: theme
-        label: '{{ theme.name }}'
+- name: "Clone custom themes (skipped if using builtin theme)"
+  become: true
+  become_user: "{{ user.name }}"
+  ansible.builtin.git:
+    repo: "{{ theme.repo }}"
+    dest: "~{{ user.name }}/.oh-my-zsh/custom/themes/{{ theme.name }}"
+    depth: 1
+  loop: "{{ themes | flatten(levels=1) }}"
+  loop_control:
+    loop_var: theme
+    label: '{{ theme.name }}'
+  when: "theme.name == (oh_my_zsh.theme | default(oh_my_zsh_theme))"
 
-    - name: Clone custom plugins
-      ansible.builtin.shell:
-        cmd: "git clone {{ plugin.source }}"
-        chdir: "~{{ user.username }}/.oh-my-zsh/custom/plugins"
-        creates: "./{{ plugin.name }}/{{ plugin.name }}"
-      when: plugin.name in ((user.oh_my_zsh | default({})).plugins | default(oh_my_zsh_plugins))
-      with_items: "{{ plugins }}"
-      loop_control:
-        loop_var: plugin
-        label: '{{ plugin.name }}'
+- name: "Clone custom plugins (skipped if using builtin plugin)"
+  become: true
+  become_user: "{{ user.name }}"
+  ansible.builtin.git:
+    repo: "{{ plugin.repo }}"
+    dest: "~{{ user.name }}/.oh-my-zsh/custom/plugins/{{ plugin.name }}"
+  loop: "{{ plugins | flatten(levels=1) }}"
+  loop_control:
+    loop_var: plugin
+    label: '{{ plugin.name }}'
+  when: "plugin.name in (oh_my_zsh.plugins | default(oh_my_zsh_plugins) | list)"
 
-    - name: Set permissions of oh-my-zsh for users
-      ansible.builtin.file:
-        path: "~{{ user.username }}/.oh-my-zsh"
-        # Prevent the cloned repository from having insecure permissions. Failing to do
-        # so causes compinit() calls to fail with "command not found: compdef" errors
-        # for users with insecure umasks (e.g., "002", allowing group writability).
-        mode: 'go-w'
-        recurse: true
+- name: Set permissions of oh-my-zsh
+  become: true
+  ansible.builtin.file:
+    path: "~{{ user.name }}/.oh-my-zsh"
+    # Prevent the cloned repository from having insecure permissions. Failing to do
+    # so causes compinit() calls to fail with "command not found: compdef" errors
+    # for users with insecure umasks (e.g., "002", allowing group writability).
+    mode: 'go-w'
+    recurse: true
 
-    - name: Set default shell for users
-      ansible.builtin.user:
-        name: "{{ user.username }}"
-        shell: "{{ oh_my_zsh_zsh_path }}"
+# If the desktop is joined to a domain, the user may not be managed locally.
+- name: Check if user managed locally
+  shell: "grep -i {{ user.name }} /etc/passwd"
+  register: presence
+  failed_when: false
+  changed_when: presence.rc == '0'
 
-    - name: Write .zshrc for users
-      become_user: "{{ user.username }}"
-      ansible.builtin.template:
-        src: zshrc.j2
-        dest: "~{{ user.username }}/.zshrc"
-        backup: true
-        mode: 'u=rw,go=r'
-      vars:
-        user_oh_my_zsh: "{{ user.oh_my_zsh | default({}) }}"
-      when: user_oh_my_zsh.write_zshrc | default(oh_my_zsh_write_zshrc) | bool
+- name: Set default shell
+  become: true
+  ansible.builtin.user:
+    name: "{{ user.name }}"
+    shell: "{{ oh_my_zsh_zsh_path }}"
+  when: presence is changed
+
+- name: Check if user theme is custom
+  ansible.builtin.stat:
+    path: "~{{ user.name }}/.oh-my-zsh/custom/themes/{{ oh_my_zsh.theme | default(oh_my_zsh_theme) }}"
+  register: customtheme
+
+- name: Write .zshrc
+  become: true
+  become_user: "{{ user.name }}"
+  ansible.builtin.template:
+    src: zshrc.j2
+    dest: "~{{ user.name }}/.zshrc"
+    backup: true
+    mode: 'u=rw,go=r'
+  when: oh_my_zsh.write_zshrc | default(oh_my_zsh_write_zshrc) | bool
+
+- name: Garbage Cleanup
+  ansible.builtin.set_fact:
+    customtheme: {}

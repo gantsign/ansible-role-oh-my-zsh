@@ -5,7 +5,7 @@
   vars:
     params:
       files:
-        - '{{ ansible_facts.os_family }}.yml'
+        - "{{ ansible_facts.os_family }}.yml"
         - default.yml
       paths:
         - vars/os_family
@@ -13,16 +13,18 @@
 - name: Install dependencies
   become: "{{ ansible_facts.distribution != 'MacOSX' }}"
   ansible.builtin.package:
-    name: '{{ oh_my_zsh_dependencies }}'
+    name: "{{ oh_my_zsh_dependencies }}"
     state: present
 
 - name: Install Oh My Zsh
-  become: true
-  ansible.builtin.import_tasks: install.yml
-  with_items: "{{ users }}"
+  ansible.builtin.include_tasks: install.yml
+  vars:
+    oh_my_zsh: "{{ user.oh_my_zsh | default(oh_my_zsh_defaults) }}"
+  when: oh_my_zsh.install | default(oh_my_zsh_install) | bool
+  loop: "{{ users | flatten(levels=1) }}"
   loop_control:
     loop_var: user
-    label: '{{ user.username }}'
+    label: "{{ user.name }}"
 
 - name: Console setup for Debian family distributions
   ansible.builtin.include_tasks: debian-console-setup.yml
