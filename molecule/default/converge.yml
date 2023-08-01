@@ -42,8 +42,8 @@
         - test_plugin1
         - test_plugin2
       users:
-        - username: test_usr1
-        - username: test_usr2
+        - name: test_usr1
+        - name: test_usr2
           oh_my_zsh:
             theme: test_theme2
             plugins:
@@ -51,10 +51,10 @@
               - test_plugin4
             update_mode: auto
             update_frequency: 31
-        - username: test_usr3
+        - name: test_usr3
           oh_my_zsh:
             install: false
-        - username: test_usr4
+        - name: test_usr4
           oh_my_zsh:
             write_zshrc: false
 
@@ -66,8 +66,8 @@
       oh_my_zsh_install: false
       oh_my_write_zshrc: false
       users:
-        - username: test_usr5
-        - username: test_usr6
+        - name: test_usr5
+        - name: test_usr6
           oh_my_zsh:
             install: true
             write_zshrc: true

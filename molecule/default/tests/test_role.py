@@ -2,40 +2,40 @@ import pytest
 import re
 
 
-@pytest.mark.parametrize('username', [
+@pytest.mark.parametrize('name', [
     'test_usr1',
     'test_usr2',
     'test_usr6',
 ])
-def test_oh_my_zsh_install(host, username):
-    oh_my_zsh = host.file('/home/' + username + '/.oh-my-zsh')
+def test_oh_my_zsh_install(host, name):
+    oh_my_zsh = host.file('/home/' + name + '/.oh-my-zsh')
     assert oh_my_zsh.exists
     assert oh_my_zsh.is_directory
-    assert oh_my_zsh.user == username
-    assert oh_my_zsh.group in [username, 'users']
+    assert oh_my_zsh.user == name
+    assert oh_my_zsh.group in [name, 'users']
 
 
-@pytest.mark.parametrize('username', [
+@pytest.mark.parametrize('name', [
     'test_usr3',
     'test_usr5',
 ])
-def test_oh_my_zsh_is_not_installed_for_excluded_users(host, username):
-    oh_my_zsh = host.file('/home/' + username + '/.oh-my-zsh')
-    zshrc = host.file('/home/' + username + '/.zshrc')
+def test_oh_my_zsh_is_not_installed_for_excluded_users(host, name):
+    oh_my_zsh = host.file('/home/' + name + '/.oh-my-zsh')
+    zshrc = host.file('/home/' + name + '/.zshrc')
     assert not oh_my_zsh.exists
     assert not zshrc.exists
 
 
-@pytest.mark.parametrize('username', [
+@pytest.mark.parametrize('name', [
     'test_usr4',
     'test_usr5',
 ])
-def test_oh_my_zshrc_is_not_installed_for_excluded_users(host, username):
-    zshrc = host.file('/home/' + username + '/.zshrc')
+def test_oh_my_zshrc_is_not_installed_for_excluded_users(host, name):
+    zshrc = host.file('/home/' + name + '/.zshrc')
     assert not zshrc.exists
 
 
-@pytest.mark.parametrize('username,theme,plugins,update_mode,update_frequency',
+@pytest.mark.parametrize('name,theme,plugins,update_mode,update_frequency',
                          [
                              ('test_usr1',
                               'test_theme1',
@@ -48,27 +48,27 @@ def test_oh_my_zshrc_is_not_installed_for_excluded_users(host, username):
                               'auto',
                               '31'),
                          ])
-def test_oh_my_zsh_config(host, username, theme, plugins,
+def test_oh_my_zsh_config(host, name, theme, plugins,
                           update_mode, update_frequency):
-    zshrc = host.file('/home/' + username + '/.zshrc')
+    zshrc = host.file('/home/' + name + '/.zshrc')
     assert zshrc.exists
     assert zshrc.is_file
-    assert zshrc.user == username
-    assert zshrc.group in [username, 'users']
+    assert zshrc.user == name
+    assert zshrc.group in [name, 'users']
     assert zshrc.contains(theme)
     assert zshrc.contains(plugins)
 
     pattern = f"zstyle ':omz:update' mode {update_mode}"
     pattern = r'^' + re.escape(pattern) + r'$'
     assert re.search(pattern, zshrc.content_string, re.MULTILINE), (
-        f"{username}: Pattern '{pattern}' not found in {zshrc.content_string}")
+        f"{name}: Pattern '{pattern}' not found in {zshrc.content_string}")
 
     pattern = f"zstyle ':omz:update' frequency {update_frequency}"
     if update_mode == 'disabled':
         pattern = f'# {pattern}'
     pattern = r'^' + re.escape(pattern) + r'$'
     assert re.search(pattern, zshrc.content_string, re.MULTILINE), (
-        f"{username}: Pattern '{pattern}' not found in {zshrc.content_string}")
+        f"{name}: Pattern '{pattern}' not found in {zshrc.content_string}")
 
 
 def test_console_setup(host):
