@@ -8,6 +8,7 @@ oh_my_zsh_defaults:
   update_mode: "{{ oh_my_zsh_update_mode }}"
   update_frequency: "{{ oh_my_zsh_update_frequency }}"
   write_zshrc: "{{ oh_my_zsh_write_zshrc }}"
+  template: "{{ oh_my_zsh_template }}"
 
 # Dependencies for Oh My Zsh
 oh_my_zsh_dependencies:

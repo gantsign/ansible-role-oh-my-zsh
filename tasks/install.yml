@@ -71,7 +71,7 @@
   become: true
   become_user: "{{ user.name }}"
   ansible.builtin.template:
-    src: zshrc.j2
+    src: "{{ oh_my_zsh_template }}"
     dest: "~{{ user.name }}/.zshrc"
     backup: true
     mode: 'u=rw,go=r'

@@ -26,3 +26,6 @@ oh_my_zsh_update_frequency: 13
 # Whether to write the ~/.zshrc file
 # May be overridden by `oh_my_zsh: write_zshrc:` under each user.
 oh_my_zsh_write_zshrc: true
+
+# Default .zshrc template. Can be overridden to use an external template.
+oh_my_zsh_template: templates/zshrc.j2
