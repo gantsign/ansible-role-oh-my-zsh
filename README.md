@@ -7,6 +7,10 @@ Ansible Role: Oh My Zsh
 
 Role to download, install and configure [Oh-My-Zsh](http://ohmyz.sh/).
 
+:thumbsdown: Deprecation Notice :thumbsdown:
+--------------------------------------------
+This role is no longer maintained.
+
 Requirements
 ------------
 
